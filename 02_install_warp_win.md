@@ -1,79 +1,45 @@
-# Configuración de Warp en Windows 10 Home
+# Instalar y configurar Warp en Windows 10 Home
 
-## 1. Instalación
+Esta guía documenta una instalación de Warp en `D:\Programas\Console\Warp`. En ese equipo, Warp no se abrió correctamente con su configuración predeterminada; definir `WGPU_BACKEND=dx12` permitió iniciar la interfaz. Las rutas mostradas corresponden a ese entorno y deben ajustarse si Warp se instala en otra ubicación.
 
-La instalación mediante `winget` presentó un error de validación del hash:
+## 1. Instalar Warp
+
+Se intentó instalar Warp con `winget`:
 
 ```powershell
 winget install Warp.Warp
 ```
 
+La instalación falló con un error de validación del hash:
+
 ```text
 El hash del instalador no coincide
 ```
 
-Por este motivo se descargó e instaló Warp manualmente desde su sitio oficial.
-
-La ruta utilizada para la instalación fue:
-
-```text
-D:\Programas\Console\Warp
-```
-
-El ejecutable quedó en:
+Se descargó e instaló Warp manualmente desde su sitio oficial. En este entorno, el ejecutable quedó en:
 
 ```text
 D:\Programas\Console\Warp\warp.exe
 ```
 
-Se puede comprobar con:
+Comprueba que exista:
 
 ```powershell
 Test-Path "D:\Programas\Console\Warp\warp.exe"
 ```
 
-Resultado esperado:
+El resultado esperado es `True`.
 
-```text
-True
-```
+## 2. Crear un wrapper para iniciar Warp
 
----
-
-## 2. Problema de inicio
-
-Warp se instalaba correctamente, pero al ejecutarlo:
+Al ejecutar directamente `warp.exe`, el proceso terminaba sin mostrar la interfaz. Forzar el backend gráfico DirectX 12 permitió abrir Warp:
 
 ```powershell
+$env:WGPU_BACKEND = "dx12"
 & "D:\Programas\Console\Warp\warp.exe"
 ```
 
-el proceso terminaba y la interfaz no aparecía.
-
-Los eventos de Windows mostraron que el problema estaba relacionado con el renderizado gráfico de Warp.
-
-La solución que permitió iniciar Warp fue forzar el backend gráfico **DirectX 12**:
-
-```powershell
-$env:WGPU_BACKEND="dx12"
-& "D:\Programas\Console\Warp\warp.exe"
-```
-
-Con esta configuración Warp pudo abrir correctamente.
-
-> `WGPU_BACKEND` no se configuró globalmente en Windows para evitar afectar otras aplicaciones.
-
----
-
-## 3. Crear un wrapper para Warp
-
-Para no tener que definir `WGPU_BACKEND` manualmente cada vez, se creó:
-
-```text
-D:\Programas\Console\Warp\bin\warp.cmd
-```
-
-Contenido:
+Para aplicar esta variable solo a Warp y no globalmente a Windows, crea el archivo `D:\Programas\Console\Warp\bin\warp.cmd` con este contenido:
 
 ```bat
 @echo off
@@ -81,59 +47,18 @@ set "WGPU_BACKEND=dx12"
 start "" "D:\Programas\Console\Warp\warp.exe"
 ```
 
-La estructura queda:
-
-```text
-D:\Programas\Console\Warp\
-├── warp.exe
-└── bin\
-    ├── warp.cmd
-    └── oz.cmd
-```
-
-Se puede probar directamente desde PowerShell:
+El wrapper establece el backend y luego inicia el ejecutable. Comprueba que el archivo exista y pruébalo:
 
 ```powershell
+Test-Path "D:\Programas\Console\Warp\bin\warp.cmd"
 & "D:\Programas\Console\Warp\bin\warp.cmd"
 ```
 
-El flujo de ejecución es:
+## 3. Configurar `warp` como comando de consola
 
-```text
-warp.cmd
-   ↓
-WGPU_BACKEND=dx12
-   ↓
-warp.exe
-```
+Añade `D:\Programas\Console\Warp\bin` al `PATH` de usuario. No añadas `D:\Programas\Console\Warp`: esa carpeta contiene `warp.exe`, que se podría ejecutar sin pasar por el wrapper.
 
----
-
-## 4. Configurar `warp` como comando de consola
-
-El objetivo es que:
-
-```powershell
-warp
-```
-
-ejecute `warp.cmd` y no directamente `warp.exe`.
-
-En el `PATH` de usuario debe mantenerse:
-
-```text
-D:\Programas\Console\Warp\bin
-```
-
-y evitar:
-
-```text
-D:\Programas\Console\Warp
-```
-
-porque esa carpeta contiene `warp.exe` y Windows podría ejecutarlo directamente sin aplicar `WGPU_BACKEND=dx12`.
-
-### Modificar el PATH
+El siguiente bloque quita ambas rutas de cualquier posición y agrega `bin` al inicio del `PATH` de usuario:
 
 ```powershell
 $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
@@ -147,14 +72,10 @@ $paths = $userPath -split ";" |
 
 $newPath = "D:\Programas\Console\Warp\bin;" + ($paths -join ";")
 
-[Environment]::SetEnvironmentVariable(
-    "Path",
-    $newPath,
-    "User"
-)
+[Environment]::SetEnvironmentVariable("Path", $newPath, "User")
 ```
 
-Actualizar el `PATH` de la sesión actual:
+Actualiza el `PATH` de la sesión actual para poder probarlo sin abrir otra ventana de PowerShell:
 
 ```powershell
 $env:Path =
@@ -162,72 +83,27 @@ $env:Path =
     [Environment]::GetEnvironmentVariable("Path", "User")
 ```
 
-Verificar:
-
-```powershell
-$env:Path -split ";" |
-    Where-Object { $_ -like "*Warp*" }
-```
-
-Resultado esperado:
-
-```text
-D:\Programas\Console\Warp\bin
-```
-
-Comprobar qué comando resolverá Windows:
+Comprueba que Windows resuelva `warp` al wrapper:
 
 ```powershell
 where.exe warp
 ```
 
-Resultado esperado:
+El resultado esperado es:
 
 ```text
 D:\Programas\Console\Warp\bin\warp.cmd
 ```
 
-A partir de ese momento:
+Ahora puedes iniciar Warp desde PowerShell con:
 
 ```powershell
 warp
 ```
 
-debe ejecutar:
+## 4. Configurar los accesos directos
 
-```text
-warp
- ↓
-warp.cmd
- ↓
-WGPU_BACKEND=dx12
- ↓
-warp.exe
-```
-
----
-
-## 5. Corregir el acceso directo del menú Inicio
-
-El instalador creó inicialmente un acceso directo que apuntaba directamente a:
-
-```text
-D:\Programas\Console\Warp\warp.exe
-```
-
-Eso evitaba que se aplicara:
-
-```text
-WGPU_BACKEND=dx12
-```
-
-El acceso directo encontrado fue:
-
-```text
-C:\Users\Developer\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Warp.lnk
-```
-
-### Localizar accesos directos de Warp
+El acceso directo del menú Inicio apuntaba directamente a `warp.exe`, por lo que no aplicaba la variable del wrapper. Para localizar accesos directos de Warp en los menús Inicio del usuario y del sistema:
 
 ```powershell
 $ws = New-Object -ComObject WScript.Shell
@@ -252,11 +128,7 @@ ForEach-Object {
 }
 ```
 
----
-
-## 6. Hacer que el menú Inicio utilice `warp.cmd`
-
-Modificar el acceso directo:
+En este entorno, el acceso directo encontrado fue `C:\Users\Developer\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Warp.lnk`. Actualízalo para que inicie el wrapper mediante `cmd.exe`:
 
 ```powershell
 $shortcutPath =
@@ -265,24 +137,17 @@ $shortcutPath =
 $ws = New-Object -ComObject WScript.Shell
 $shortcut = $ws.CreateShortcut($shortcutPath)
 
-$shortcut.TargetPath =
-    "C:\Windows\System32\cmd.exe"
-
-$shortcut.Arguments =
-    '/c ""D:\Programas\Console\Warp\bin\warp.cmd""'
-
-$shortcut.WorkingDirectory =
-    "D:\Programas\Console\Warp"
-
-$shortcut.IconLocation =
-    "D:\Programas\Console\Warp\warp.exe,0"
-
+$shortcut.TargetPath = "C:\Windows\System32\cmd.exe"
+$shortcut.Arguments = '/c ""D:\Programas\Console\Warp\bin\warp.cmd""'
+$shortcut.WorkingDirectory = "D:\Programas\Console\Warp"
+$shortcut.IconLocation = "D:\Programas\Console\Warp\warp.exe,0"
 $shortcut.WindowStyle = 7
-
 $shortcut.Save()
 ```
 
-### Verificar el acceso directo
+Si creas un acceso directo de escritorio, usa la misma configuración: destino `C:\Windows\System32\cmd.exe`, argumentos `/c ""D:\Programas\Console\Warp\bin\warp.cmd""`, directorio de inicio `D:\Programas\Console\Warp` e icono `D:\Programas\Console\Warp\warp.exe`.
+
+Verifica la configuración del acceso directo del menú Inicio:
 
 ```powershell
 $shortcut = $ws.CreateShortcut(
@@ -294,127 +159,25 @@ $shortcut.Arguments
 $shortcut.WorkingDirectory
 ```
 
-Resultado esperado:
+Debe mostrar `cmd.exe` como destino, `warp.cmd` como argumento y la carpeta de Warp como directorio de inicio.
 
-```text
-C:\Windows\System32\cmd.exe
-/c ""D:\Programas\Console\Warp\bin\warp.cmd""
-D:\Programas\Console\Warp
-```
+## Comprobación final
 
-El icono sigue utilizando el recurso gráfico original de:
-
-```text
-D:\Programas\Console\Warp\warp.exe
-```
-
----
-
-## 7. Acceso directo del escritorio
-
-Si se crea un acceso directo manual, no debe ejecutar directamente:
-
-```text
-D:\Programas\Console\Warp\warp.exe
-```
-
-Debe utilizar:
-
-```text
-C:\Windows\System32\cmd.exe
-```
-
-con los argumentos:
-
-```text
-/c ""D:\Programas\Console\Warp\bin\warp.cmd""
-```
-
-Como directorio de inicio:
-
-```text
-D:\Programas\Console\Warp
-```
-
-Y como icono puede utilizarse:
-
-```text
-D:\Programas\Console\Warp\warp.exe
-```
-
----
-
-## 8. Arquitectura final
-
-Todos los mecanismos de inicio deben terminar utilizando el mismo wrapper:
-
-```text
-                   ┌─ Menú Inicio
-                   │
-                   ├─ Acceso directo
-                   │
-                   └─ PowerShell: warp
-                           │
-                           ▼
-        D:\Programas\Console\Warp\bin\warp.cmd
-                           │
-                           ▼
-                 WGPU_BACKEND=dx12
-                           │
-                           ▼
-        D:\Programas\Console\Warp\warp.exe
-```
-
-Esto evita configurar `WGPU_BACKEND` globalmente y aplica DirectX 12 únicamente a Warp.
-
----
-
-## 9. Comprobaciones rápidas
-
-### Ejecutable
-
-```powershell
-Test-Path "D:\Programas\Console\Warp\warp.exe"
-```
-
-### Wrapper
-
-```powershell
-Test-Path "D:\Programas\Console\Warp\bin\warp.cmd"
-```
-
-### PATH
-
-```powershell
-$env:Path -split ";" |
-    Where-Object { $_ -like "*Warp*" }
-```
-
-### Resolución del comando
+Confirma que el comando de consola use el wrapper y luego inicia Warp:
 
 ```powershell
 where.exe warp
-```
-
-Resultado deseado:
-
-```text
-D:\Programas\Console\Warp\bin\warp.cmd
-```
-
-### Ejecutar Warp
-
-```powershell
 warp
 ```
 
-## Configuración utilizada
+El flujo de inicio queda centralizado en el wrapper:
 
 ```text
-Sistema operativo : Windows 10 Home
-Warp               : D:\Programas\Console\Warp
-Ejecutable         : D:\Programas\Console\Warp\warp.exe
-Wrapper            : D:\Programas\Console\Warp\bin\warp.cmd
-Backend gráfico    : DirectX 12
-Variable           : WGPU_BACKEND=dx12
+PowerShell / menú Inicio / acceso directo
+                  ↓
+          bin\warp.cmd
+                  ↓
+       WGPU_BACKEND=dx12
+                  ↓
+             warp.exe
 ```
