@@ -1,87 +1,49 @@
 # Instalar OpenCode en Windows 10 Home
 
-## Requisitos
+Esta guía instala OpenCode globalmente con npm y lo inicia desde la carpeta de un proyecto.
 
-Antes de instalar OpenCode, verificar que Node.js y npm estén disponibles:
+## 1. Comprobar los requisitos
+
+Verifica que Node.js y npm estén disponibles en PowerShell:
 
 ```powershell
 node --version
 npm --version
 ```
 
-## 1. Instalar OpenCode con npm
+Si alguno de los comandos no se reconoce, instala Node.js antes de continuar.
 
-Abrir PowerShell y ejecutar:
+## 2. Instalar OpenCode
 
-```powershell
-npm i -g opencode-ai
-```
-
-Durante la instalación puede aparecer una advertencia indicando que npm bloqueó el script `postinstall`:
-
-```text
-npm warn install-scripts 1 package had install scripts blocked because they are not covered by allowScripts
-npm warn install-scripts opencode-ai (postinstall: node ./postinstall.mjs)
-```
-
-## 2. Autorizar el script de instalación
-
-Ejecutar nuevamente la instalación permitiendo específicamente los scripts de `opencode-ai`:
+Ejecuta en PowerShell:
 
 ```powershell
 npm install -g --allow-scripts=opencode-ai opencode-ai
 ```
 
-Esto permite que OpenCode complete correctamente su proceso de instalación.
+La opción `--allow-scripts=opencode-ai` autoriza a npm a ejecutar el script `postinstall` de OpenCode. Sin esa autorización, npm puede bloquear el script y mostrar una advertencia.
 
 ## 3. Verificar la instalación
 
-Ejecutar:
+Comprueba que PowerShell encuentre OpenCode:
 
 ```powershell
 opencode --version
 ```
 
-En esta instalación se obtuvo:
+En la instalación documentada se obtuvo `1.18.25`. La versión puede ser distinta si el paquete se actualiza.
 
-```text
-1.18.25
-```
+## 4. Iniciar OpenCode en un proyecto
 
-Esto confirma que OpenCode está instalado y disponible desde PowerShell.
-
-## 4. Ejecutar OpenCode
-
-Ubicarse en la carpeta del proyecto donde se desea trabajar:
+Cambia `D:\ruta\del\proyecto` por la ruta de la carpeta que quieres usar como workspace. Luego ejecuta:
 
 ```powershell
 cd D:\ruta\del\proyecto
-```
-
-Ejecutar:
-
-```powershell
 opencode
 ```
 
-OpenCode iniciará utilizando la carpeta actual como workspace.
+OpenCode utilizará la carpeta actual como workspace.
 
-## Nota sobre `curl`
+## Nota: instalador para Unix
 
-El siguiente comando no debe ejecutarse directamente en PowerShell:
-
-```bash
-curl -fsSL https://opencode.ai/install | bash
-```
-
-En Windows PowerShell, `curl` puede resolverse como `Invoke-WebRequest`, que no reconoce parámetros como:
-
-```text
--fsSL
-```
-
-Por este motivo, en Windows 10 Home se utilizó la instalación mediante npm:
-
-```powershell
-npm install -g --allow-scripts=opencode-ai opencode-ai
-```
+El comando `curl -fsSL https://opencode.ai/install | bash` está pensado para entornos con `bash`. No lo ejecutes directamente en PowerShell: allí `curl` puede ser un alias de `Invoke-WebRequest`, que no admite las mismas opciones. Para esta guía de Windows se utiliza npm.
