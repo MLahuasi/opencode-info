@@ -1,46 +1,22 @@
 # Configuración global y TUI de OpenCode
 
-## 1. Ubicaciones de configuración y memoria
+Esta guía describe dónde guarda OpenCode su configuración en Windows y cómo definir instrucciones globales y opciones de la interfaz de terminal (TUI).
 
-> Nota: esta información se obtuvo consultando directamente la consola de OpenCode sobre las ubicaciones donde almacena configuración y memoria.
+## Ubicaciones de configuración y datos
 
-| Nivel                      | Ruta en Windows                                          | ¿Qué almacena?                                                                                                                                       |
-| -------------------------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Global (config)**        | `C:\Users\<usuario>\.config\opencode\`                   | Configuración global: `opencode.jsonc`, `tui.json` y subcarpetas como `agents/`, `commands/`, `plugins/`, `skills/`, `themes/`, `tools/` y `modes/`. |
-| **Proyecto (config)**      | `[proyecto]\opencode.json` o `[proyecto]\opencode.jsonc` | Configuración específica del proyecto: modelos, providers, permisos, MCP, etc. Puede versionarse en Git.                                             |
-| **Proyecto (`.opencode`)** | `[proyecto]\.opencode\`                                  | Agents, commands, plugins, skills y themes propios del proyecto.                                                                                     |
-| **Datos / memoria**        | `C:\Users\<usuario>\.local\share\opencode\`              | `opencode.db` con sesiones e historial, `auth.json`, logs y repositorios auxiliares.                                                                 |
-| **Managed**                | `C:\ProgramData\opencode\opencode.json`                  | Configuración empresarial administrada por la organización.                                                                                          |
+Las rutas siguientes se recopilaron consultando la consola de OpenCode. `<usuario>` representa el nombre de la cuenta de Windows y `[proyecto]` la carpeta del proyecto.
 
----
+| Nivel | Ruta | Contenido |
+| --- | --- | --- |
+| Configuración global | `C:\Users\<usuario>\.config\opencode\` | `opencode.jsonc`, `tui.json` y carpetas como `agents/`, `commands/`, `plugins/`, `skills/`, `themes/`, `tools/` y `modes/`. |
+| Configuración del proyecto | `[proyecto]\opencode.json` o `[proyecto]\opencode.jsonc` | Ajustes del proyecto, como modelos, proveedores, permisos y MCP. Puede versionarse en Git. |
+| Recursos del proyecto | `[proyecto]\.opencode\` | Agents, commands, plugins, skills y themes específicos del proyecto. |
+| Datos y memoria | `C:\Users\<usuario>\.local\share\opencode\` | `opencode.db` (sesiones e historial), `auth.json`, logs y repositorios auxiliares. |
+| Configuración administrada | `C:\ProgramData\opencode\opencode.json` | Configuración empresarial administrada por la organización. |
 
-## 2. Configuración global
+## Configurar instrucciones globales
 
-Ir a:
-
-```text
-C:\Users\<usuario>\.config\opencode\opencode.jsonc
-```
-
-Configuración inicial:
-
-```json
-{
-  "$schema": "https://opencode.ai/config.json"
-}
-```
-
----
-
-## 3. Instrucciones globales
-
-En el mismo directorio crear:
-
-```text
-instructions.md
-```
-
-Contenido:
+En la carpeta global de configuración, crea `instructions.md` con las reglas que quieras aplicar a tus proyectos. Ejemplo:
 
 ```md
 # Coding Instructions
@@ -63,7 +39,7 @@ Eres un agente de codificación enfocado en clean code.
 - Aplica buenas prácticas de seguridad cuando corresponda.
 ```
 
-Registrar el archivo en `opencode.jsonc`:
+Registra el archivo en `C:\Users\<usuario>\.config\opencode\opencode.jsonc`:
 
 ```json
 {
@@ -72,49 +48,23 @@ Registrar el archivo en `opencode.jsonc`:
 }
 ```
 
----
+Si ya existe `opencode.jsonc`, agrega la propiedad `instructions` a su configuración en lugar de reemplazar el archivo.
 
-## 4. Configuración de la TUI
+## Configurar la TUI
 
-El archivo global de configuración de la interfaz se encuentra en:
+El archivo global de la interfaz es:
 
 ```text
 C:\Users\<usuario>\.config\opencode\tui.json
 ```
 
-Para intentar que OpenCode lo cree automáticamente, cambiar el tema desde la consola:
+Puedes abrir el selector de temas desde OpenCode con:
 
 ```text
 /theme
 ```
 
-Si `tui.json` no se crea, hacerlo manualmente.
-
-Configuración mínima:
-
-```json
-{
-  "$schema": "https://opencode.ai/tui.json",
-  "theme": "opencode"
-}
-```
-
----
-
-## 5. Configurar tema, notificaciones y sonidos
-
-Para consultar las opciones disponibles:
-
-1. Ir a `https://opencode.ai/`
-2. Abrir **Documentación**.
-3. Ir a **TUI**.
-4. Revisar la sección de configuración:
-
-```text
-https://opencode.ai/docs/es/tui/#configurar
-```
-
-Configuración funcional:
+Si el archivo `tui.json` no se crea automáticamente, créalo en la ruta anterior. Esta configuración define un tema y opciones de atención, notificaciones y sonido:
 
 ```json
 {
@@ -130,30 +80,20 @@ Configuración funcional:
 }
 ```
 
-Opciones principales:
+Opciones incluidas:
 
 - `theme`: tema visual de OpenCode.
-- `enabled`: activa el sistema de atención.
-- `notifications`: habilita notificaciones.
-- `sound`: habilita sonidos.
-- `volume`: volumen entre `0` y `1`.
-- `sound_pack`: paquete de sonidos utilizado por OpenCode.
+- `attention.enabled`: activa las opciones de atención.
+- `attention.notifications`: habilita notificaciones.
+- `attention.sound`: habilita sonidos.
+- `attention.volume`: volumen entre `0` y `1`.
+- `attention.sound_pack`: paquete de sonidos, aquí `opencode.default`.
 
-Para habilitar correctamente los sonidos se usa:
+Para consultar otras opciones, revisa la [documentación de configuración de la TUI](https://opencode.ai/docs/es/tui/#configurar). No es necesario definir `sounds` salvo que quieras personalizar archivos de audio específicos.
 
-```json
-"sound_pack": "opencode.default"
-```
+## Aplicar los cambios
 
-No es necesario definir `sounds` salvo que se quieran personalizar archivos de audio específicos.
-
----
-
-## 6. Reiniciar OpenCode
-
-Después de modificar `opencode.jsonc`, `instructions.md` o `tui.json`, reiniciar OpenCode.
-
-Para continuar la conversación anterior:
+Reinicia OpenCode después de modificar `opencode.jsonc`, `instructions.md` o `tui.json`. Para continuar la conversación anterior al iniciar, ejecuta:
 
 ```bash
 opencode -c
