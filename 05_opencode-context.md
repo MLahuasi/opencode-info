@@ -1,76 +1,61 @@
 # Contexto en conversaciones con LLM
 
-## El LLM es stateless
+## 1. Qué significa que un LLM sea *stateless*
 
-Un LLM es **stateless**: no recuerda por sí mismo las interacciones anteriores.
-
-Para mantener una conversación coherente, la aplicación debe volver a enviar el **contexto** en cada nueva solicitud.
+Un modelo de lenguaje (LLM) no conserva por sí solo las interacciones anteriores. Para responder de forma coherente, la aplicación le envía la información pertinente junto con cada solicitud. A ese conjunto se le llama **contexto**.
 
 ```text
 Contexto = instrucciones + conversación + información adicional
 ```
 
-## ¿Qué forma parte del contexto?
+La aplicación decide qué información incluir; no necesariamente vuelve a enviar todo el historial en cada solicitud.
 
-Hay dos grupos principales.
+## 2. Qué puede formar parte del contexto
 
-### Contexto poco configurable por el usuario
+El contexto puede combinar instrucciones y recursos con el contenido generado durante la sesión.
 
-Puede incluir:
+### Instrucciones y recursos
 
-- System Prompt.
-- Tools.
-- MCPs.
-- Skills.
-- Custom Agents.
-- Archivos de instrucciones como `AGENTS.md` o `CLAUDE.md`.
+Según la plataforma y la configuración, puede incluir:
 
-Este contenido suele ser agregado automáticamente por la plataforma o el agente.
+- System prompt.
+- Herramientas (tools) y servidores MCP.
+- Skills y agentes personalizados.
+- Archivos de instrucciones, como `AGENTS.md` o `CLAUDE.md`.
 
-### Contexto que el usuario puede compactar
+### Contenido de la sesión
 
-Es el contenido que crece durante la conversación:
+Durante una conversación pueden aportar contexto:
 
-- Mensajes del usuario.
-- Respuestas del modelo.
-- Archivos e imágenes.
-- Resultados de herramientas.
-- Comandos y tests.
+- Mensajes del usuario y respuestas del modelo.
+- Archivos e imágenes compartidos.
+- Resultados de herramientas, comandos y pruebas.
 - Información recuperada durante la sesión.
 
-Esta es la parte que más conviene optimizar.
+El historial de la sesión suele ser el contenido que más crece y que puede resumirse o compactarse cuando deja de ser necesario en detalle.
 
-## ¿Cómo crece el contexto?
+## 3. Cómo crece una conversación
 
-Cada nueva interacción puede incluir el historial anterior.
+Una conversación puede acumular mensajes y resultados anteriores:
 
 ```text
-Solicitud 1
-Prompt 1
+Solicitud 1: Prompt 1
 
-Solicitud 2
-Prompt 1
-Respuesta 1
-Prompt 2
+Solicitud 2: Prompt 1 + Respuesta 1 + Prompt 2
 
-Solicitud 3
-Prompt 1
-Respuesta 1
-Prompt 2
-Respuesta 2
-Prompt 3
+Solicitud 3: Prompt 1 + Respuesta 1 + Prompt 2 + Respuesta 2 + Prompt 3
 ```
 
-Cuanto más larga es la conversación, más contexto puede enviarse al modelo y mayor puede ser el consumo de tokens.
+Cuanto más historial se incluya en una solicitud, más tokens puede consumir. La cantidad concreta depende del contexto que la aplicación decida enviar.
 
-## Flujo del contexto
+## 4. Flujo del contexto
 
 ```mermaid
 flowchart LR
-    A["Instrucciones<br/>System Prompt · Tools · MCP · Skills"]
-    B["Conversación<br/>Mensajes · Respuestas · Archivos · Tools"]
+    A["Instrucciones y recursos<br/>System prompt · Tools · MCP · Skills"]
+    B["Conversación<br/>Mensajes · Respuestas · Archivos · Resultados"]
     C["Nuevo mensaje"]
-    D["Contexto enviado"]
+    D["Contexto seleccionado<br/>para la solicitud"]
     E["LLM<br/>Stateless"]
     F["Nueva respuesta"]
 
@@ -82,48 +67,34 @@ flowchart LR
     F --> B
 ```
 
-La nueva respuesta pasa a formar parte de la conversación y puede incluirse nuevamente en solicitudes posteriores.
+La respuesta nueva pasa a formar parte de la conversación. La aplicación puede incluirla en solicitudes posteriores junto con otra información relevante.
 
-## Smart Zone y Dumb Zone
+## 5. Tamaño del contexto y “Smart Zone”
 
-Aunque un modelo soporte una ventana de contexto grande, no siempre conviene llenarla completamente.
+Una ventana de contexto grande no implica que siempre convenga llenarla. Si se envía demasiada información irrelevante, pueden aumentar el consumo de tokens y el costo, y puede resultar más difícil mantener el foco o priorizar instrucciones vigentes.
 
-Como referencia práctica:
+El rango de **40 % a 60 %** se presenta aquí como una referencia práctica informal, no como un límite técnico universal ni una garantía de calidad:
 
 ```text
 0%                         100%
 ┌────────────────┬────────────────┐
-│   SMART ZONE   │   DUMB ZONE    │
+│   SMART ZONE   │   DUMB ZONE     │
 └────────────────┴────────────────┘
-        aprox. 40% - 60%
+        referencia aproximada: 40%–60%
 ```
 
-La zona entre **40% y 60%** puede utilizarse como una referencia práctica y no como un límite técnico universal.
+## 6. Compactar el contexto
 
-Cuando el contexto crece demasiado pueden aparecer:
-
-- Mayor consumo de tokens.
-- Más información irrelevante.
-- Mayor costo.
-- Menor precisión.
-- Conflictos con instrucciones antiguas.
-
-## Compactar el contexto
-
-En conversaciones largas conviene reemplazar parte del historial antiguo por información resumida.
+En conversaciones largas, se puede resumir el historial antiguo y conservar la información que todavía guía el trabajo:
 
 ```text
 Resumen
-+
 Decisiones importantes
-+
 Estado actual
-+
 Pendientes
-+
 Nuevo mensaje
 ```
 
-La idea no es eliminar contexto indiscriminadamente, sino conservar la información que sigue siendo útil.
+El objetivo es reducir el historial que se necesita enviar sin perder decisiones, estado o tareas pendientes que sigan siendo útiles.
 
-> **El LLM no recuerda la conversación: recibe contexto. Cuanto más contexto acumulamos, más tokens se utilizan y más importante se vuelve compactarlo.**
+> **El modelo no recuerda por sí solo la conversación: la aplicación le proporciona contexto. Cuando ese contexto crece, conviene conservar lo relevante y resumir lo demás.**
