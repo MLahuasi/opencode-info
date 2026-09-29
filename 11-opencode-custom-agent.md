@@ -1,65 +1,101 @@
-# [Agente Personalizado en OpenCode](https://opencode.ai/docs/agents/) (Subagents)
+# Agentes personalizados en OpenCode
 
-Su objetivo es realizar tareas específicas
+Un agente personalizado es un asistente especializado para una tarea y un flujo de trabajo. Puede tener instrucciones, permisos y un modo de uso propios. Esta guía crea un validador de criterios de aceptación y muestra cómo ejecutarlo desde OpenCode.
 
-## Configuración Markdown agent
+Consulta la [documentación oficial de agentes](https://opencode.ai/docs/agents/) para ver todas las opciones vigentes.
+
+## Temario
+
+1. [Definir un agente Markdown](#1-definir-un-agente-markdown)
+2. [Crear un agente](#2-crear-un-agente)
+3. [Crear el validador de criterios de aceptación](#3-crear-el-validador-de-criterios-de-aceptación)
+4. [Validar una Spec](#4-validar-una-spec)
+
+---
+
+## 1. Definir un agente Markdown
+
+Los agentes Markdown se configuran con metadatos YAML al inicio del archivo y las instrucciones en el cuerpo. El nombre del archivo se convierte en el nombre del agente.
 
 ```md
 ---
-description: Reviews code for quality and best practices
+description: Revisa cambios de código e identifica riesgos sin modificarlos.
 mode: subagent
-model: anthropic/claude-sonnet-4-20250514
-temperature: 0.1
 permission:
   edit: deny
   bash: deny
 ---
 
-You are in code review mode. Focus on:
+Revisa los cambios de código y presenta los hallazgos por nivel de gravedad, con referencias a los archivos y líneas correspondientes.
 
-- Code quality and best practices
-- Potential bugs and edge cases
-- Performance implications
-- Security considerations
-
-Provide constructive feedback without making direct changes.
+Considera errores, casos límite, rendimiento y seguridad. No modifiques archivos ni ejecutes comandos de shell.
 ```
 
-## [Creación de Agente](https://opencode.ai/docs/agents/#create-agents)
+`mode: subagent` permite que un agente principal lo invoque como subagente. Para trabajar con el agente en una sesión principal también, se puede configurar `mode: all`. Los subagentes se pueden invocar manualmente con `@nombre-del-agente` o automáticamente cuando el agente principal lo considere pertinente.
 
-1. Se puede crear desde una `consola` (fuera de `OpenCode`), en donde se configurará el `agent` en base a preguntas. Ejecutando:
+Las opciones `edit: deny` y `bash: deny` restringen las modificaciones y los comandos de shell. Adapta los permisos a la tarea que ejecutará el agente.
+
+## 2. Crear un agente
+
+### 2.1 Desde la terminal
+
+Desde la raíz del proyecto, ejecuta:
 
 ```bash
 opencode agent create
 ```
 
-2. Se puede crear desde `OpenCode` en modo `Build`
+El asistente pregunta dónde guardarlo, qué tarea realizará y qué permisos necesita. Selecciona el alcance del proyecto para compartirlo mediante Git.
 
-```md
-Crear un agente personalizado para validar los criterios de aceptación de archivos `spec`.
+### 2.2 Desde OpenCode
+
+En modo `Build`, solicita la creación del agente con su responsabilidad, permisos y alcance. Por ejemplo:
+
+```text
+Crear un agente de proyecto para validar los criterios de aceptación de una spec.
 
 - Revisar cada elemento de `Acceptance criteria`.
 - Corregir la implementación cuando sea necesario.
-- Marcar únicamente los criterios verificados.
+- Marcar solo los criterios que hayan sido verificados y dejar sin marcar los que no se puedan comprobar.
 - Usar Context7 para validar recomendaciones actuales de Next.js.
 - Usar Playwright MCP para validar UI, interacción y comportamiento visual.
-- Usar un modelo con visión, por ejemplo `GPT-5.6 Terra` de OpenAI, para comparar screenshots cuando sea necesario.
+- Usar un modelo con visión para comparar screenshots cuando la fidelidad visual forme parte de la spec.
 - Configurar el agente únicamente a nivel de proyecto, no global.
 ```
 
-- Se crea el `agent ` [spec-acceptance-validator.md](../open-daycare/.opencode/agent/spec-acceptance-validator.md) en el directorio `.opencode` que se ejecuta con `@spec-acceptance-validator spec.md` desde `OpenCode`.
+---
+
+## 3. Crear el validador de criterios de aceptación
+
+El agente de este ejemplo se llama `spec-acceptance-validator`. Su descripción indica cuándo usarlo; las instrucciones detallan cómo inspeccionar la Spec, reunir evidencia, corregir incumplimientos y actualizar los criterios.
+
+El archivo del agente es [spec-acceptance-validator.md](https://github.com/MLahuasi/opencode-daycare/blob/main/.opencode/agent/spec-acceptance-validator.md). En este repositorio está guardado en `.opencode/agent/`, una variante singular heredada que OpenCode todavía reconoce ([guía de migración V2](https://opencode.ai/v2/docs/migrate-v1/)). Para agentes nuevos, la ruta recomendada actualmente es `.opencode/agents/`.
+
+El agente se puede invocar directamente desde OpenCode:
+
+```text
+@spec-acceptance-validator 01-home-feed.md
+```
 
 ![](./assets/19-opencode-agent-custom.png)
 
-- Se crea el `command` [spec-acceptance-validator.md](../open-daycare/.opencode/command/spec-acceptance-validator.md) en el directorio `.opencode` que se ejecuta con `/spec-acceptance-validator spec.md` desde `OpenCode`.
+### 3.1 Crear un comando para el agente
+
+Un comando personalizado ofrece un atajo para ejecutar el agente con una instrucción predefinida. El comando de este ejemplo está en [spec-acceptance-validator.md](https://github.com/MLahuasi/opencode-daycare/blob/main/.opencode/command/spec-acceptance-validator.md) y lo invoca así:
+
+```text
+/spec-acceptance-validator 01-home-feed.md
+```
+
+El repositorio guarda el comando en `.opencode/command/`, carpeta singular heredada que OpenCode todavía reconoce ([documentación de comandos](https://opencode.ai/v2/docs/commands)). Para comandos nuevos, OpenCode recomienda `.opencode/commands/`.
 
 ![](./assets/20-opencode-command-custom.png)
 
-- Reiniciar la `OpenCode` para verificar los cambios.
+Después de guardar los archivos, comprueba que el agente aparezca al escribir `@` y que el comando aparezca al escribir `/`. Si no aparecen, revisa la ubicación y el nombre de los archivos; reinicia OpenCode si hace falta.
 
-## Validar
+## 4. Validar una Spec
 
-- Este agente debe revisar los siguientes `Criterios de Aceptación` del `spec` [01-home-feed.md](../open-daycare/specs/01-home-feed.md):
+El agente debe revisar individualmente los criterios de aceptación de [01-home-feed.md](https://github.com/MLahuasi/opencode-daycare/blob/main/specs/01-home-feed.md). La lista siguiente muestra su estado inicial:
 
 ```md
 ## Acceptance criteria
@@ -79,13 +115,13 @@ Crear un agente personalizado para validar los criterios de aceptación de archi
 - [ ] Las capturas de verificación se almacenan bajo `.playwright-mcp/Home/`.
 ```
 
-Para esto en `OpenCode` en modo `Build` ejecutar:
+Para iniciar la revisión en modo `Build`, ejecuta el comando:
 
-```bash
-@spec-acceptance-validator 01-home-feed.md
+```text
+/spec-acceptance-validator 01-home-feed.md
 ```
 
-Una vez terminado se actualiza:
+Cuando termina la validación, el agente actualiza cada casilla solo si comprobó su criterio. Este es el estado resultante del ejemplo:
 
 ```md
 ## Acceptance criteria
