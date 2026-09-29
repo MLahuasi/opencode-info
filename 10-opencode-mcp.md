@@ -1,76 +1,59 @@
-# MCPs y Agentes Personalizados
+# MCPs e instrucciones para agentes en OpenCode
 
-## Configuración APP
+Esta guía explica cómo conectar servidores MCP a OpenCode y cómo aprovechar sus herramientas durante el trabajo en una aplicación. Incluye ejemplos con Playwright y Context7, además de reglas para que el agente respete las instrucciones y la arquitectura del proyecto.
 
-- Crear app
+El código y las capturas de la aplicación sirven como ejemplos prácticos. La configuración y los conceptos de OpenCode y MCP son el tema principal.
+
+## Temario
+
+1. [Preparar el proyecto de ejemplo](#1-preparar-el-proyecto-de-ejemplo)
+2. [Configurar MCPs en OpenCode](#2-configurar-mcps-en-opencode)
+   1. [Playwright](#21-playwright)
+   2. [Context7](#22-context7)
+3. [Skills e instrucciones del agente](#3-skills-e-instrucciones-del-agente)
+4. [Aplicar las instrucciones y ejecutar la aplicación](#4-aplicar-las-instrucciones-y-ejecutar-la-aplicacion)
+5. [Diseño de la aplicación de ejemplo](#5-diseño-de-la-aplicación-de-ejemplo)
+
+---
+
+## 1. Preparar el proyecto de ejemplo
+
+### 1.1 Crear e iniciar la aplicación
+
+- Crear una aplicación Next.js:
 
 ```bash
 npx create-next-app@latest open-daycare
 # Dar clic en opciones recomendadas
 ```
 
-- Una vez instalada se levanta la app ejecutando:
+- Una vez creada, inicia la aplicación con:
 
 ```bash
-    npm run dev
+npm run dev
 ```
 
-- Se crea la aplicación con los archivos:
+En este proyecto de ejemplo, Next.js mantiene un bloque de instrucciones para agentes dentro de [`AGENTS.md`](../open-daycare/AGENTS.md). Ese bloque apunta a la documentación local de la versión instalada, ubicada en `node_modules/next/dist/docs/`, y puede actualizarse al ejecutar `next dev`.
 
-  > - [`AGENTS.md`](../open-daycare/AGENTS.md): En esta version nest.js crea un conjunto de archivos (cambian continuamente) para ayudar en la generación de código fuente con agentes de AI. **NOTA**: en esta versión se encuentran en `node_modules/next/dist/docs/`
+![](./assets/12-open-care-next-ia-docs.png)
 
-  > ![](./assets/12-open-care-next-ia-docs.png)
+El archivo [`CLAUDE.md`](../open-daycare/CLAUDE.md) referencia `AGENTS.md` para que Claude Code también considere las instrucciones del proyecto.
 
-  > - [`CALUDE.md`](../open-daycare/CLAUDE.md): Hace referencia a `@AGENTS.md` para que si se genera código con `Claude Code` se analize primero la información de `AGENTS.md`.
+Las plantillas HTML y las imágenes de referencia se guardan en [`references/`](../open-daycare/references/). Se pueden preparar con herramientas de diseño asistido por IA, por ejemplo [Claude Design](https://claude.ai/design), [V0](https://v0.app/), [Lovable](https://lovable.dev/), [Google Stitch](https://stitch.withgoogle.com/) o [Bolt](https://bolt.new/).
 
-- Crear un directorio [`references`](../open-daycare/references/) y colocar las plantillas `html` e `imágenes` generadas mediante IA. Se pone a consideración las siguientes herramientas:
+## 2. Configurar MCPs en OpenCode
 
-> - **`Herramientas para crear Pantallas HTLM` (pagadas)**
->   > - [**Claude Design**](https://claude.ai/design)
->   > - [**V0**](https://v0.app/)
->   > - [**Lovable**](https://lovable.dev/)
->   > - [**Google Stitch**](https://stitch.withgoogle.com/)
->   > - [**Bolt**](https://bolt.new/)
+El Model Context Protocol (MCP) permite conectar OpenCode con herramientas externas. OpenCode admite servidores locales y remotos, y configura ambos bajo la propiedad `mcp` de su archivo de configuración. Consulta la [documentación de MCP de OpenCode](https://opencode.ai/docs/mcp-servers/).
 
-## MCPs
+Agrega los servidores que necesita el flujo de trabajo y revisa las herramientas disponibles con `/mcps`.
 
-Los MCPs aumentan la cuota por lo que deben ser muy puntuales para su uso. Existen varios.
+### 2.1 Playwright
 
-### [Playwright](https://playwright.dev/)
+[Playwright MCP](https://playwright.dev/docs/getting-started-mcp) permite que el agente abra un navegador e interactúe con una aplicación web.
 
-Le da a los agentes un navegador web en el cual los agentes pueden interactuar. Sirve para sitios web.
+#### 2.1.1 Configurar en OpenCode
 
-#### Configurar en OpenCode
-
-- Ir a [Documentación](https://playwright.dev/docs/getting-started-mcp) y copiar:
-
-```json
-{
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": ["@playwright/mcp@latest"]
-    }
-  }
-}
-```
-
-- Ingresar desde la terminal al proyecto y ejecutar `opencode`
-- En modo `Build` solictar:
-
-```text
-Instala el mcp Playwright localmente
-{
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": ["@playwright/mcp@latest"]
-    }
-  }
-}
-```
-
-- Con esta orden `OpenCode ` puede a solicitar permisos para instalar y configurar en el proyecto. **NOTA**: En esta version `OpenCode` generó el archivo [opencode.json](../open-daycare/opencode.json):
+Desde la raíz del proyecto, agrega la configuración local de OpenCode a `opencode.json`:
 
 ```json
 {
@@ -78,17 +61,23 @@ Instala el mcp Playwright localmente
   "mcp": {
     "playwright": {
       "type": "local",
-      "command": ["npx", "@playwright/mcp@latest"],
+      "command": ["npx", "-y", "@playwright/mcp@latest"],
       "enabled": true
     }
   }
 }
 ```
 
-**NOTA**: En el caso de que se presenten errores porque `OpenCode` no reconoce correctamente a `NVM`
+Esta es la estructura que utiliza OpenCode. La guía de Playwright muestra una configuración genérica para otros clientes MCP; en OpenCode, la entrada se declara dentro de `mcp`.
 
-```json
-// Version Windows
+En este proyecto, la configuración se encuentra en [`opencode.json`](../open-daycare/opencode.json). Para la configuración global, consulta la [guía de configuración de OpenCode](https://opencode.ai/docs/config/).
+
+#### 2.1.2 Resolver problemas de `PATH` con NVM
+
+Si OpenCode no encuentra `npx` porque Node.js se administra con NVM, indica en la configuración la ruta completa al ejecutable. Sustituye las rutas y versiones de estos ejemplos por las de tu equipo.
+
+```jsonc
+// Windows con NVM
 {
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
@@ -112,8 +101,8 @@ Instala el mcp Playwright localmente
 
 o
 
-```json
-// Version Linux/macOS
+```jsonc
+// Linux o macOS con NVM
 {
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
@@ -135,95 +124,75 @@ o
 }
 ```
 
-- Reiniciar la sesión
-- Abrir mcps con el comando `/mcps`
+Después de guardar la configuración, reinicia OpenCode y usa `/mcps` para confirmar que Playwright esté conectado.
 
-  ![](./assets/13-opencode-mcp-playwright-config.png)
+![](./assets/13-opencode-mcp-playwright-config.png)
 
-- Una vez configurado el `MCP` en modo `Build` solicitar:
+Con la aplicación en ejecución (`npm run dev`), en modo `Build` puedes pedir:
 
 ```text
 Utiliza el MCP Playwright y revisa el home (/)
 ```
 
-- `OpenCode` realiza lo siguiente:
+OpenCode puede iniciar la aplicación, abrir el navegador y revisar la página solicitada. Para guardar capturas, especifica el formato o directorio que debe utilizar.
 
-  > - Ejecuta la aplicación desde una `consola`
-  > - Abre un navegador con la aplicación corriendo
-  > - crea el directorio `.playwright-mcp`. **NOTA**: Este directorio no debería pasar al repositorio de `GitHub`
+En este proyecto, las capturas de trabajo se guardan en `.playwright-mcp/`. Si son temporales, agrega ese directorio a `.gitignore`; conserva en Git únicamente las imágenes que se quieran incluir como documentación.
 
-- Se puede solictar solicitar en modo `Build`
+Por ejemplo, en modo `Build` puedes solicitar:
 
 ```text
 captura un screenshot
 ```
 
-> - Home Desktop:
+**Home de escritorio**
 
-> ![](./assets/14-opencode-mcp-local-screenshot-home-desktop.png)
->
-> - Home Mobile:
+![Home de escritorio](./assets/14-opencode-mcp-local-screenshot-home-desktop.png)
 
-> ![](./assets/15-opencode-mcp-local-screenshot-home-mobile.png)
->
-> - Home:
+**Home móvil**
 
-> ![](./assets/16-opencode-mcp-local-screenshot-home-screenshot.png)
+![Home móvil](./assets/15-opencode-mcp-local-screenshot-home-mobile.png)
 
-**NOTA**:
+**Captura adicional del Home**
 
-Para que el agente guarde los `Screenshots` en un directorio se puede modificar [AGENTS.md](../open-daycare/AGENTS.md) con una instrucción semenjante a:
+![Captura adicional del Home](./assets/16-opencode-mcp-local-screenshot-home-screenshot.png)
+
+Para que el agente guarde las capturas en un directorio específico, puedes agregar una regla en [`AGENTS.md`](../open-daycare/AGENTS.md):
 
 ```md
 ## MCPs
 
-- Cualquier Screenshot o archivo relacionado a `Playwright` se deben almacenar en `.playwright-mcp`
+- Guarda las capturas y los archivos de Playwright en `.playwright-mcp/`.
 ```
 
----
+### 2.2 Context7
 
-### [Context7](https://context7.com/)
+[Context7](https://context7.com/docs/overview) permite consultar documentación de librerías y frameworks durante el desarrollo. Su MCP puede resolver el identificador de una librería y recuperar documentación relevante para una consulta.
 
-`Context7` sirve para darle a un asistente de IA documentación `actualizada y específica de la versión` de una librería o framework mientras estás programando. Su objetivo principal es reducir respuestas basadas en documentación antigua o APIs inventadas.
+#### 2.2.1 Instalar y conectar Context7
 
-Es de pago, se debe crear una cuenta, tiene una capa gratuita.
-
-#### Configurar en OpenCode
-
-- Ir a [Documentación](https://context7.com/install):
-- Ejecutar
+Desde la terminal, ejecuta el asistente de instalación oficial:
 
 ```bash
-npx ctx7 setup
+npx ctx7 setup --mcp --opencode --project
 ```
 
-- Seleccionar `MCP server - Agents calls Context7 tools via MCP protocol to retrieve up-to-date library docs`
-- Seleccionar `OpenCode`
-  > - Se crea una `API KEY` en un archivo `opencode.jsonc`
-  > - Se añade una regla en `.config\opencode\AGENTS.md`. **NOTA** : Depende del lugar en donde se cnfiguró `OpenCode`
-  > - Se crea `.agents\skills\context7-mcp\SKILL.md` en la carpeta de `user`
-- Ingresar desde la `consola` al directorio de la aplicación ejecutar `opencode`
-- En modo `Build` ejecutar el comando `/mcps` y verificar que se encuentre conectado `Context7`.
+El comando configura Context7 como MCP para OpenCode en el proyecto actual. Si prefieres una configuración global, quita `--project`. La instalación puede pedir autenticación; no guardes una clave de API directamente en un archivo versionado. Consulta la [guía oficial de instalación](https://context7.com/install) y la [referencia del CLI](https://context7.com/docs/clients/cli) para conocer las opciones actuales.
 
-  ![](./assets/17-opencode-mcp-context7-config.png)
+Después, inicia o reinicia OpenCode y ejecuta `/mcps` para comprobar la conexión.
 
-- Que hace [Context7](https://context7.com/docs/overview)
+![](./assets/17-opencode-mcp-context7-config.png)
 
-`Context7` proporciona al `LLM` **documentación actualizada y específica de la versión de las librerías del proyecto**.
+#### 2.2.2 Consultar documentación con Context7
 
-Sin `Context7`, el modelo puede usar información antigua, APIs inexistentes o ejemplos de versiones desactualizadas. Con Context7 MCP, el asistente consulta documentación y ejemplos actuales directamente desde la fuente, mejorando la compatibilidad del código generado.
-
-Para usarlo, se puede añadir `use context7` al final del prompt.
-
-- Ejecutar en modo `Build` en `OpenCode`
+Puedes pedir explícitamente al agente que use Context7 añadiendo `use context7` al prompt. Por ejemplo, en modo `Build`:
 
 ```text
-Como se deben proteger rutas en Next.js usa context7
+¿Cómo se deben proteger las rutas en Next.js? Usa Context7 para consultar la documentación actual.
 ```
 
-- `OpenCode` responde:
+OpenCode puede resolver la librería y consultar la documentación relacionada antes de responder. En este ejemplo, las llamadas realizadas fueron:
 
-Consultaré la documentación actual de Next.js mediante Context7 y resumiré los patrones recomendados para proteger rutas, diferenciando protección en servidor, middleware/proxy y autorización por recurso.
+Consultaré la documentación actual de Next.js mediante Context7 y resumiré los patrones recomendados para proteger rutas con comprobaciones en el servidor, Proxy y autorización por recurso.
 
 ```text
 →Skill "context7-mcp"
@@ -231,55 +200,55 @@ Consultaré la documentación actual de Next.js mediante Context7 y resumiré lo
 
 ⚙ context7_query-docs [libraryId=/vercel/next.js, query=Official authentication and authorization guidance for protecting routes in the App Router, including Server Components, redirect, cookies, and checking permissions close to the data source]
 
-⚙ context7_query-docs [libraryId=/vercel/next.js, query=Official Next.js middleware or proxy documentation for redirecting unauthenticated users and matcher configuration, including security limitations]
+⚙ context7_query-docs [libraryId=/vercel/next.js, query=Official Next.js Proxy documentation for redirecting unauthenticated users, matcher configuration, and security limitations]
 
 ⚙ context7_query-docs [libraryId=/vercel/next.js, query=Official Next.js guidance for protecting Route Handlers and Server Actions, validating sessions and authorization on the server]
 ```
 
-`+ Thought: Clarifying Next.js Proxy and Authentication Concepts · 3.8s`
+En Next.js, la autorización debe comprobarse en el servidor, no únicamente ocultando componentes en el cliente. La respuesta organiza la protección en estas capas:
 
-En Next.js, la protección debe hacerse `en el servidor`, no únicamente ocultando componentes en el cliente. La estrategia recomendada es combinar:
+1. **Autenticación:** comprobar si existe una sesión válida.
+2. **Autorización:** comprobar permisos para cada recurso o acción.
+3. **Proxy:** hacer comprobaciones optimistas y redirecciones tempranas.
+4. **Data Access Layer (DAL):** verificar sesión y permisos cerca del acceso a los datos.
 
-> 1. `Autenticación`: comprobar si existe una sesión válida.
-> 2. `Autorización`: comprobar roles/permisos para cada recurso o acción.
-> 3. `Proxy`: redirección rápida y optimista antes de renderizar.
-> 4. `Data Access` Layer: verificación definitiva cerca de los datos.
+Los siguientes fragmentos son patrones de referencia. `auth`, `decrypt` y los tipos de sesión dependen de la solución de autenticación del proyecto; no son módulos incluidos automáticamente por Next.js.
 
-1. **Verificación centralizada de sesión**
+##### Verificar una sesión desde una DAL
 
 ```ts
 // app/lib/dal.ts
 
 import { cache } from "react";
-import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 
-export const verifySession = cache(async () => {
+export const getSession = cache(async () => {
   const session = await auth();
 
-  if (!session?.user) {
-    redirect("/login");
-  }
-
-  return session;
+  return session?.user ? session : null;
 });
 ```
 
-2. **Proteger una página**
+La función devuelve `null` cuando no hay sesión. Una página puede redirigir al usuario:
 
 ```ts
 // app/dashboard/page.tsx
 
-import { verifySession } from "@/app/lib/dal";
+import { redirect } from "next/navigation";
+import { getSession } from "@/app/lib/dal";
 
 export default async function DashboardPage() {
-  const session = await verifySession();
+  const session = await getSession();
+
+  if (!session) {
+    redirect("/login");
+  }
 
   return <h1>Hola, {session.user.name}</h1>;
 }
 ```
 
-3. **Proteger rutas mediante `proxy.ts`**
+##### Usar `proxy.ts` para comprobaciones optimistas
 
 En las versiones actuales, Next.js utiliza proxy.ts para redirecciones optimistas:
 
@@ -307,15 +276,21 @@ export const config = {
 
 El `proxy` no debe ser la única defensa. La documentación recomienda evitar consultas a la base de datos allí y usarlo para redirecciones rápidas.
 
-4. **Proteger Route Handlers**
+El `proxy` no debe ser la única defensa. Úsalo para comprobaciones rápidas y completa la autorización cerca de los datos. La [guía de autenticación de Next.js](https://nextjs.org/docs/app/guides/authentication) recomienda una DAL para centralizar esas comprobaciones.
+
+##### Proteger Route Handlers
 
 ```ts
 // app/api/admin/users/route.ts
 
-import { verifySession } from "@/app/lib/dal";
+import { getSession } from "@/app/lib/dal";
 
 export async function GET() {
-  const session = await verifySession();
+  const session = await getSession();
+
+  if (!session) {
+    return new Response(null, { status: 401 });
+  }
 
   if (session.user.role !== "admin") {
     return new Response(null, { status: 403 });
@@ -325,22 +300,23 @@ export async function GET() {
 }
 ```
 
-Usa:
+El handler devuelve `401` si no hay una sesión y `403` si el usuario no tiene permisos.
 
-- `401` cuando el usuario no está autenticado.
-- `403` cuando está autenticado pero no tiene permisos.
-
-5. **Proteger Server Actions**
+##### Proteger Server Actions
 
 Una página protegida no protege automáticamente sus Server Actions:
 
 ```ts
 "use server";
 
-import { verifySession } from "@/app/lib/dal";
+import { getSession } from "@/app/lib/dal";
 
 export async function deleteUser(userId: string) {
-  const session = await verifySession();
+  const session = await getSession();
+
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
 
   if (session.user.role !== "admin") {
     throw new Error("Forbidden");
@@ -350,7 +326,7 @@ export async function deleteUser(userId: string) {
 }
 ```
 
-**Reglas importantes**
+##### Reglas de seguridad
 
 - No confíes en `useEffect`, `localStorage` ni guards únicamente del cliente.
 - No protejas solamente desde un `layout`; los layouts no necesariamente se vuelven a ejecutar durante la navegación.
@@ -359,68 +335,38 @@ export async function deleteUser(userId: string) {
 - Comprueba sesión y permisos en páginas, Route Handlers y Server Actions por separado.
 - Usa una librería de autenticación establecida para crear y validar sesiones; Next.js no proporciona por sí mismo un sistema completo de autenticación.
 
-Fuentes oficiales consultadas: `Authentication` ([https://nextjs.org/docs/app/guides/authentication](https://nextjs.org/docs/app/guides/authentication)), `Data Security` ([https://nextjs.org/docs/app/guides/data-security](https://nextjs.org/docs/app/guides/data-security)) y `Proxy` ([https://nextjs.org/docs/app/api-reference/file-conventions/proxy](https://nextjs.org/docs/app/api-reference/file-conventions/proxy)).
+Referencias: [Authentication](https://nextjs.org/docs/app/guides/authentication), [Data Security](https://nextjs.org/docs/app/guides/data-security) y [Proxy](https://nextjs.org/docs/app/api-reference/file-conventions/proxy).
 
 ---
 
-## Uso de Skills
+## 3. Skills e instrucciones del agente
 
-Para este laboratorio se utilizan las Skills desarrolladas por [Klerith](https://github.com/Klerith/fernando-skills/tree/main), diseñadas para trabajar con un flujo basado en `specs`.
+La instalación y el uso de las Skills `spec` y `spec-impl` se explican en [09-opencode-spec-driven-development.md](./09-opencode-spec-driven-development.md). Este documento se enfoca en cómo combinar esas instrucciones con las herramientas MCP.
 
-### Instalar las Skills
-
-Ejecutar:
-
-```bash
-# Instala las Skills disponibles desde el repositorio indicado.
-npx skills add klerith/fernando-skills
-```
-
-Se generará una estructura similar a:
-
-```text
-.agents/
-└── skills/
-    ├── spec/
-    │   ├── SKILL.md
-    │   └── template.md
-    │
-    └── spec-impl/
-        └── SKILL.md
-```
-
-**NOTA**:
-
-Modificar [AGENTS.md](../open-daycare/AGENTS.md) con la funcionalidad de `Context7`:
-
-```md
-<!-- Agrega a la sección -->
-
-## MCPs
-
-- Usa `Context7` para obtener documentación actualizada del `framework`.
-```
+En [`AGENTS.md`](../open-daycare/AGENTS.md), describe cuándo debe usar cada MCP. La sección 4.1 incluye un ejemplo de estas reglas junto con las demás instrucciones del proyecto.
 
 ---
 
-## Configurar Aplicación
+## 4. Aplicar las instrucciones y ejecutar la aplicación
 
-### Iniciar App
+### 4.1 Definir las reglas del proyecto
 
-- En [AGENTS.md](../open-daycare/AGENTS.md) configurar reglas por ejemplo:
+El siguiente ejemplo reúne las instrucciones utilizadas en el proyecto: el flujo de trabajo con Skills y MCP, la arquitectura, las convenciones de código y las reglas de estilo. Adáptalo a la estructura real del repositorio; las rutas deben coincidir con las carpetas existentes.
 
 ```md
 ## Workflow (MCPs)
 
 - Para funcionalidades grandes, cargar `spec`; para implementar una spec aprobada, cargar `spec-impl` y respetar sus pausas de revisión.
-- Validador de aceptación del proyecto: agente `@spec-acceptance-validator` (`.opencode/agent/spec-acceptance-validator.md`) y comando `/spec-acceptance-validator <spec>` (`.opencode/command/spec-acceptance-validator.md`). Corrige incumplimientos, marca solo criterios verificados y usa Context7 y Playwright cuando aplica.
+- Consulta Context7 para APIs que dependan de la versión y usa Playwright cuando la funcionalidad requiera interacción o revisión visual en el navegador.
+- Validador de aceptación del proyecto: agente `@spec-acceptance-validator` (`.opencode/agent/spec-acceptance-validator.md`) y comando `/spec-acceptance-validator <spec>` (`.opencode/command/spec-acceptance-validator.md`). Corrige incumplimientos y marca solo los criterios que haya verificado.
 - Los nombres de specs se relacionan con el módulo, no con una captura o prototipo.
 
 ## Arquitectura
 
-- Usar feature-first: `components/ui` para UI genérica, `shared` para código transversal y `features/<domain>` para cada dominio.
-- Una feature puede contener `components`, `data`, `types`, `schemas`, `actions`, `services` y `utils`.
-- Las features no dependen de internals de otras features. Exponer su API pública mediante `index.ts` y mover lo común a `shared`.
+- Usar feature-first: `app/components/ui` para UI genérica, `app/shared` para código transversal y `app/features/<domain>` para cada dominio.
+- Los mocks estáticos se guardan en `app/data/mocks`; la persistencia JSON editable, en `app/infrastructure/persistence/json/data`.
+- Una feature puede contener `components`, `types`, `schemas`, `actions`, `services` y `utils`.
+- Las features no dependen de internals de otras features. Exponer su API pública mediante `index.ts` y mover lo común a `app/shared`.
 - Los archivos especiales de App Router mantienen su convención de Next.js; la organización interna no crea rutas sin `page` o `route`.
 
 ## Código
@@ -443,7 +389,7 @@ Modificar [AGENTS.md](../open-daycare/AGENTS.md) con la funcionalidad de `Contex
 
 ### Datos y configuración
 
-- Componentes NO DEBEN contener datos mock o de negocio. Ubicarlos tipados en `features/<feature>/data` o recibirlos por props.
+- Componentes NO DEBEN contener datos mock o de negocio. Ubicarlos tipados en `app/data/mocks` o recibirlos por props.
 - Datos mock incluyen nombres, fechas, cantidades, publicaciones, etiquetas variables y opciones de navegación.
 - Configuración compartida usa constantes; configuración de entorno usa variables de entorno. Se permiten literales técnicos, SVG y copy propio de componentes genéricos.
 
@@ -451,41 +397,44 @@ Modificar [AGENTS.md](../open-daycare/AGENTS.md) con la funcionalidad de `Contex
 
 - Usar Tailwind para la mayoría de estilos y layout, conforme a la guía local de Next.js.
 - Usar CSS Modules colocados junto al componente cuando estilos o variantes complejos no sean claros con utilities.
-- `globals.css` se reserva para Tailwind, reset, fuentes y tokens globales.
+- `app/globals.css` se reserva para Tailwind, reset, fuentes y tokens globales.
 - Colores, sombras y gradientes compartidos usan tokens semánticos. No usar estilos inline salvo valores calculados dinámicamente.
-```
-
-- Ingresar al directorio del proyecto y ejecutar `opencode`
-- `Opcional` en modo `Plan` solicitar que analice el contexto para la ejecución de `/init` ya que `AGENTS.md` tiene contenido y se debe respetar, tambien que considere las `skills` instaladas.
-
-```text
-Analiza el contexto del proyecto antes de ejecutar /init. @AGENTS.md ya contiene instrucciones que deben preservarse. Respeta su contenido, estructura, referencias a documentación y las skills disponibles en .agents. Completa únicamente la información necesaria para inicializar el proyecto, sin sobrescribir, duplicar ni eliminar reglas existentes.
-```
-
-- En modo `Build` ejecutar el comando `/init`. **NOTA**: Esto debe modificar el archivo [`AGENTS`](../open-daycare/AGENTS.md)
-- Es recomendable hacer un commit a git.
-
-```bash
-git add .
-git commit -m "DayCare - OpenCode Config"
 ```
 
 ---
 
-### Diseño Aplicación
+### 4.2 Inicializar OpenCode y ejecutar la aplicación
 
-#### [Home](./opencode-daycare/home.md)
+Desde la raíz del proyecto, abre OpenCode. Si solicitas `/init`, indica que debe revisar y completar las instrucciones existentes sin eliminar las reglas de Next.js ni reemplazar el contenido de [`AGENTS.md`](../open-daycare/AGENTS.md).
 
-#### [Kids](./opencode-daycare/kids.md)
+Puedes pedir primero el análisis en modo `Plan`:
 
-### [Login y Activate](./opencode-daycare/login-activate.md)
+```text
+Analiza el proyecto antes de ejecutar /init. @AGENTS.md ya contiene instrucciones que deben preservarse. Respeta su contenido, estructura y referencias a documentación. Completa únicamente la información necesaria para inicializar el proyecto, sin sobrescribir, duplicar ni eliminar reglas existentes.
+```
 
-### [Add y Edit Kid](./opencode-daycare/add-edit-kid.md)
+Después ejecuta `/init` y revisa el archivo antes de guardar los cambios. En esta versión de Next.js, el bloque gestionado puede actualizarse al ejecutar `next dev`; consérvalo para que las instrucciones sigan disponibles.
 
-### [Instalar Dependencia Externa - Email](./opencode-daycare/email.md)
+La aplicación se inició en la sección 1.1. Si el servidor se detuvo, vuelve a ejecutarlo con `npm run dev`.
 
-### [Reorganizar Arquitectura](./opencode-daycare/organice-architecture.md)
+Si el cambio de configuración quedó correcto, regístralo en Git:
 
-### [Activar Cuenta](./opencode-daycare/activate-account.md)
+```bash
+git add .
+git commit -m "OpenCode MCP and project instructions"
+```
 
-### [Post](./opencode-daycare/create-update-post.md)
+---
+
+## 5. Diseño de la aplicación de ejemplo
+
+Estos documentos contienen los requisitos y decisiones usados para las páginas y funcionalidades de la aplicación:
+
+- [Home](./opencode-daycare/home.md)
+- [Kids](./opencode-daycare/kids.md)
+- [Login y activación](./opencode-daycare/login-activate.md)
+- [Agregar y editar un niño](./opencode-daycare/add-edit-kid.md)
+- [Integrar el servicio de email](./opencode-daycare/email.md)
+- [Reorganizar la arquitectura](./opencode-daycare/organice-architecture.md)
+- [Activar una cuenta](./opencode-daycare/activate-account.md)
+- [Crear y actualizar publicaciones](./opencode-daycare/create-update-post.md)
