@@ -1,6 +1,6 @@
 # OpenCode: TUI (Terminal User Interface)
 
-Esta guía cubre el uso de OpenCode desde la terminal: navegación, sesiones, contexto, herramientas y flujo de trabajo Plan/Build. Los atajos y comandos se conservan como están documentados en este material.
+Esta guía cubre el uso de OpenCode desde la terminal: navegación, sesiones, contexto, herramientas y flujo de trabajo `Plan`/`Build`. Los atajos predeterminados pueden cambiar según la versión o la configuración; consulta la [documentación de la TUI](https://opencode.ai/v2/docs/cli/tui/) y la [referencia de atajos](https://opencode.ai/v2/docs/cli/keybinds/) si alguno no coincide.
 
 ## 1. Iniciar OpenCode
 
@@ -43,13 +43,13 @@ muestra los comandos disponibles de OpenCode.
 
 ### Borrar el prompt
 
-Para borrar todo el texto escrito actualmente en el prompt:
+Para borrar desde el cursor hasta el inicio de la línea:
 
 ```text
 Ctrl + U
 ```
 
-Para borrar palabra por palabra:
+Para borrar la palabra anterior:
 
 ```text
 Ctrl + W
@@ -94,7 +94,7 @@ Al escribir:
 
 OpenCode muestra los comandos disponibles.
 
-Algunos de los principales son:
+Algunos comandos frecuentes son:
 
 ```text
 /compact
@@ -107,6 +107,8 @@ Algunos de los principales son:
 /themes
 /undo
 ```
+
+La lista disponible puede variar según la versión y la configuración. Usa `/` para consultar los comandos de tu sesión.
 
 ---
 
@@ -195,13 +197,13 @@ B
 
 OpenCode muestra un porcentaje `%` que permite conocer cuánto contexto de la sesión se está utilizando.
 
-Como regla práctica, es recomendable intentar mantener el contexto aproximadamente por debajo del:
+Como orientación informal, estas notas sugieren mantener el uso aproximadamente por debajo de:
 
 ```text
 50% - 60%
 ```
 
-Cuando el contexto empieza a superar estos valores se debería considerar:
+No es un límite técnico universal: el espacio disponible depende del modelo y de la solicitud. Cuando el porcentaje se acerque a esa referencia, se puede considerar:
 
 - Compactar la conversación.
 - Iniciar una nueva sesión.
@@ -232,7 +234,7 @@ Por este motivo, `/compact` puede eliminar información que posteriormente resul
 
 Debe utilizarse con precaución.
 
-Como regla práctica, se puede considerar compactar cuando el contexto se aproxime al:
+Como señal aproximada —no como umbral oficial— se puede considerar compactar cuando el contexto se acerque al:
 
 ```text
 50%
@@ -255,55 +257,79 @@ La compactación permite continuar trabajando utilizando un resumen de la sesió
 
 ## 8. Modo Shell
 
-El carácter:
+Escribe `!` al inicio de un prompt vacío para entrar al modo `shell` y ejecutar un comando:
 
 ```text
-!
+!node --version
 ```
 
-permite ingresar al modo `shell`.
+La salida del comando se incorpora a la conversación y puede usarse como contexto. Por ejemplo, después puedes preguntar qué versión de Node.js se está ejecutando.
 
-Los comandos escritos desde este modo se ejecutan como comandos de consola.
+Para salir del modo `shell` sin ejecutar el comando, presiona `Esc`.
 
-Por ejemplo:
+---
 
-```text
-yo: node --version
-```
+## 9. Configurar Git para Undo y Redo
 
-OpenCode puede ejecutar:
+Para que `/undo` y `/redo` puedan restaurar también los cambios realizados sobre los archivos, el proyecto debe estar asociado a Git.
 
-```text
-shell: v24.18.0
-```
+Es recomendable realizar esta configuración directamente desde la terminal normal para no utilizar tokens innecesariamente.
 
-Esta información pasa a formar parte del historial de la conversación.
+### Inicializar Git
 
-Después se puede preguntar:
+Desde el directorio del proyecto:
 
-```text
-yo: ¿Qué versión de Node.js se está ejecutando actualmente?
-```
-
-Y el modelo puede responder utilizando la información obtenida anteriormente:
-
-```text
-shell: Node.js v24.18.0
-```
-
-Esto permite ejecutar comandos y utilizar sus resultados directamente como contexto para el LLM.
-
-Para salir del modo `shell`:
-
-```text
-Backspace
+```bash
+git init
 ```
 
 ---
 
-## 9. Undo y Redo
+### Agregar los archivos
 
-OpenCode permite navegar entre versiones anteriores de la conversación.
+Antes de agregar archivos, revisa qué se incluirá y confirma que los secretos estén excluidos en `.gitignore`:
+
+```bash
+git status
+git add .
+```
+
+---
+
+### Crear el primer commit
+
+```bash
+git commit -m "first commit"
+```
+
+El proyecto tendrá ahora un estado inicial que Git puede utilizar como referencia.
+
+---
+
+### Reiniciar OpenCode
+
+Después de configurar Git, inicia OpenCode desde el directorio del proyecto. Si ya estaba abierto y no reconoce el repositorio, reinícialo:
+
+```bash
+opencode
+```
+
+Esto permite que OpenCode detecte la configuración Git del proyecto.
+
+Ahora los comandos:
+
+```text
+/undo
+/redo
+```
+
+y sus respectivos atajos pueden utilizar Git para revertir o restaurar también cambios realizados sobre los archivos.
+
+---
+
+## 10. Undo y Redo
+
+`/undo` revierte el último mensaje del usuario y las respuestas posteriores. Para que también pueda restaurar los cambios de archivos, el proyecto debe ser un repositorio Git.
 
 ### Undo
 
@@ -322,7 +348,7 @@ Ctrl + X
 U
 ```
 
-Sin Git configurado, puede regresar al estado anterior de la conversación pero no necesariamente restaurar los cambios realizados sobre los archivos.
+Si el proyecto aún no está bajo Git, sigue los pasos de la sección anterior antes de depender de Undo/Redo para revertir cambios en archivos.
 
 ---
 
@@ -334,7 +360,7 @@ El comando:
 /redo
 ```
 
-revierte un `/undo`.
+restaura los cambios revertidos por `/undo`.
 
 También se puede utilizar:
 
@@ -343,62 +369,7 @@ Ctrl + X
 R
 ```
 
-Sin Git configurado, puede restaurar el estado del chat, pero no necesariamente los cambios realizados sobre los archivos.
-
----
-
-## 10. Configurar Git para Undo y Redo
-
-Para que `/undo` y `/redo` puedan restaurar también los cambios realizados sobre los archivos, el proyecto debe estar asociado a Git.
-
-Es recomendable realizar esta configuración directamente desde la terminal normal para no utilizar tokens innecesariamente.
-
-### Inicializar Git
-
-Desde el directorio del proyecto:
-
-```bash
-git init
-```
-
----
-
-### Agregar los archivos
-
-```bash
-git add .
-```
-
----
-
-### Crear el primer commit
-
-```bash
-git commit -m "first commit"
-```
-
-El proyecto tendrá ahora un estado inicial que Git puede utilizar como referencia.
-
----
-
-### Reiniciar OpenCode
-
-Después de configurar Git, ingresar nuevamente a OpenCode:
-
-```bash
-opencode
-```
-
-Esto permite que OpenCode detecte la configuración Git del proyecto.
-
-Ahora los comandos:
-
-```text
-/undo
-/redo
-```
-
-y sus respectivos atajos pueden utilizar Git para revertir o restaurar también cambios realizados sobre los archivos.
+La restauración de cambios en archivos también depende del historial Git del proyecto.
 
 ---
 
@@ -550,7 +521,7 @@ shared/
 Si actualmente se está trabajando en otra parte del proyecto y `auth` no es necesario para OpenCode, se puede agregar al archivo `.ignore`:
 
 ```text
-auth/*
+auth/**
 ```
 
 El directorio continúa formando parte del repositorio Git porque no está excluido en `.gitignore`.
@@ -568,9 +539,9 @@ Esto ayuda a evitar:
 
 ### Diferencia práctica
 
-`.gitignore` controla principalmente qué archivos o directorios no deben ser administrados por Git.
+`.gitignore` indica a Git qué archivos no rastreados debe ignorar; no deja de rastrear archivos que ya fueron agregados al repositorio.
 
-`.ignore` puede utilizarse para indicar qué archivos o directorios no son relevantes para OpenCode.
+`.ignore` permite afinar las búsquedas de archivos de OpenCode. Puede excluir rutas con patrones normales, como `auth/**`, o volver a incluir rutas ignoradas por `.gitignore` con patrones negados, como `!auth/`.
 
 Esto resulta especialmente útil en:
 
@@ -801,29 +772,7 @@ Cambia el color de fondo a morado pastel. Recuerda que usar Tailwind
 Fondo cambiado a bg-purple-200 (morado pastel) en index.html:9.
 ```
 
-No es necesario regresar a `Plan` para cada modificación sencilla.
-
-Una estrategia práctica es:
-
-```text
-Tarea compleja
-      │
-      ▼
-    Plan
-      │
-      │ Analizar
-      │ Evaluar alternativas
-      │ Crear estrategia
-      │ Definir pasos
-      ▼
-    Build
-      │
-      │ Implementar
-      │ Modificar archivos
-      │ Validar
-      ▼
-   Resultado
-```
+No es necesario regresar a `Plan` para cada modificación sencilla que ya esté contemplada en el plan. Si el ajuste cambia el alcance o requiere decisiones nuevas, vuelve a `Plan` y revisa la propuesta antes de continuar.
 
 ---
 
@@ -832,12 +781,12 @@ Tarea compleja
 | Acción                               | Comando               |
 | ------------------------------------ | --------------------- |
 | Mostrar comandos                     | `Ctrl + P`            |
-| Borrar todo el prompt                | `Ctrl + U`            |
-| Borrar palabra                       | `Ctrl + W`            |
+| Borrar hasta el inicio de la línea   | `Ctrl + U`            |
+| Borrar palabra anterior              | `Ctrl + W`            |
 | Buscar/referenciar archivo           | `@archivo`            |
 | Mostrar comandos `/`                 | `/`                   |
 | Entrar en Shell                      | `!`                   |
-| Salir de Shell                       | `Backspace`           |
+| Salir del modo Shell                 | `Esc`                 |
 | Crear nueva sesión                   | `/new`                |
 | Recuperar sesión anterior al iniciar | `opencode -c`         |
 | Mostrar sesiones                     | `Ctrl + X`, luego `L` |
@@ -853,29 +802,11 @@ Tarea compleja
 
 ---
 
-## 19. Recomendaciones generales
+## 19. Recorrido recomendado
 
-1. Ejecutar OpenCode desde el directorio del proyecto.
+1. Abre OpenCode desde la raíz del proyecto y documenta su objetivo antes de generar `AGENTS.md`.
+2. Mantén las reglas globales en `AGENTS.md` y aporta archivos específicos con `@` cuando hagan falta.
+3. Para tareas complejas, diseña y revisa el plan antes de pasar a `Build`; luego valida los cambios con las herramientas del proyecto.
+4. Configura Git antes de depender de `/undo` y `/redo` para restaurar archivos. Antes de compactar una sesión, conserva las decisiones y restricciones importantes.
 
-2. Crear un `README.md` que explique claramente **qué se quiere realizar** antes de ejecutar `/init`.
-
-3. Mantener `AGENTS.md` pequeño y con información realmente global.
-
-4. Mantener documentación especializada en archivos separados y cargarla con `@` cuando sea necesaria.
-
-5. Utilizar `.ignore` para evitar que OpenCode explore partes del repositorio que no son necesarias para la tarea.
-
-6. Inicializar Git antes de depender de `/undo` y `/redo` para restaurar cambios sobre archivos.
-
-7. Intentar mantener el contexto aproximadamente por debajo del `50% - 60%`.
-
-8. Utilizar `/compact` con precaución porque el LLM puede eliminar información que considere secundaria pero que posteriormente sea importante.
-
-9. Para tareas importantes o complejas:
-
-```text
-Plan → analizar y diseñar
-Build → implementar
-```
-
-10. Se puede utilizar un modelo más potente durante `Plan` y otro más económico o rápido durante `Build` cuando la implementación ya esté claramente definida.
+Para tareas con muchas decisiones, puede convenir un modelo de mayor capacidad durante `Plan` y uno más rápido durante `Build`, una vez que los pasos estén claros.

@@ -32,7 +32,9 @@ Este documento utiliza un juego de Asteroids para mostrar diferentes formas de i
 
 ---
 
-# 1. Implementar una funcionalidad utilizando una rama
+## Parte I — Desarrollo local con Git y Worktrees
+
+### 1. Implementar una funcionalidad utilizando una rama
 
 El primer ejemplo consiste en implementar un nuevo power-up llamado `velocidad`.
 
@@ -54,7 +56,7 @@ main
                  main
 ```
 
-## 1.1. Crear la rama
+#### 1.1. Crear la rama
 
 Crear una nueva rama y cambiarse a ella:
 
@@ -72,7 +74,7 @@ La funcionalidad queda aislada de `main` mientras se desarrolla.
 
 ---
 
-## 1.2. Planificar la funcionalidad con OpenCode
+#### 1.2. Planificar la funcionalidad con OpenCode
 
 Abrir `OpenCode` sobre el repositorio y utilizar el modo `Plan`.
 
@@ -94,7 +96,7 @@ El modo `Plan` permite definir primero las reglas de la funcionalidad y reducir 
 
 ---
 
-## 1.3. Implementar el plan
+#### 1.3. Implementar el plan
 
 Cambiar `OpenCode` al modo `Build` y solicitar:
 
@@ -106,7 +108,7 @@ Implementa el plan
 
 ---
 
-## 1.4. Revisar y crear el commit
+#### 1.4. Revisar y crear el commit
 
 Antes del commit es recomendable revisar:
 
@@ -129,7 +131,7 @@ Los cambios quedan registrados en la rama:
 
 ---
 
-## 1.5. Integrar la funcionalidad en `main`
+#### 1.5. Integrar la funcionalidad en `main`
 
 Cambiar a:
 
@@ -161,9 +163,9 @@ main
 
 ---
 
-# 2. Trabajar en paralelo con Git Worktrees
+### 2. Trabajar en paralelo con Git Worktrees
 
-## 2.1. ¿Qué es un Worktree?
+#### 2.1. ¿Qué es un Worktree?
 
 Un `worktree` permite tener varias copias de trabajo del mismo repositorio, cada una asociada a una rama distinta, sin tener que clonar el repositorio varias veces.
 
@@ -225,7 +227,7 @@ Cada directorio contiene su propia copia de trabajo del proyecto.
 
 ---
 
-# 3. Ejecutar varias sesiones de OpenCode
+### 3. Ejecutar varias sesiones de OpenCode
 
 Abrir una `consola` apuntando a cada `Worktree`.
 
@@ -266,11 +268,11 @@ Las sesiones en `OpenCode` pueden funcionar simultáneamente porque trabajan sob
 
 ---
 
-# 4. Planificar las funcionalidades
+### 4. Planificar las funcionalidades
 
 Cada sesión puede planificar su funcionalidad independientemente.
 
-## 4.1. Branch `triple-shot`
+#### 4.1. Branch `triple-shot`
 
 En modo `Plan`:
 
@@ -278,7 +280,7 @@ En modo `Plan`:
 Planea la implementación de triple shot: por 5 segundos, el personaje dispara 3 veces en línea recta.
 ```
 
-## 4.2. Branch `skins-system`
+#### 4.2. Branch `skins-system`
 
 En modo `Plan`:
 
@@ -286,7 +288,7 @@ En modo `Plan`:
 Planea la implementación de un sistema de skins: poder cambiar la apariencia de la nave.
 ```
 
-## 4.3. Branch `shield`
+#### 4.3. Branch `shield`
 
 En modo `Plan`:
 
@@ -296,7 +298,7 @@ Planea la implementación de un escudo: un escudo que protege a la nave de los p
 
 ---
 
-# 5. Implementar los planes
+### 5. Implementar los planes
 
 En cada sesión cambiar a modo `Build` y ejecutar:
 
@@ -308,11 +310,11 @@ Cada sesión de `OpenCode` modificará únicamente la copia de trabajo correspon
 
 ---
 
-# 6. Crear los commits
+### 6. Crear los commits
 
 Una vez implementada y revisada cada funcionalidad, registrar los cambios.
 
-## 6.1. Manualmente
+#### 6.1. Manualmente
 
 Desde cada Worktree:
 
@@ -332,7 +334,7 @@ El mismo proceso se realiza en cada Worktree.
 
 ---
 
-## 6.2. Utilizando OpenCode
+#### 6.2. Utilizando OpenCode
 
 También se puede solicitar a cada sesión de OpenCode:
 
@@ -344,11 +346,13 @@ OpenCode puede revisar los cambios y ejecutar el commit sobre la rama correspond
 
 ---
 
-# 7. Unificar las funcionalidades
+### 7. Unificar las funcionalidades
 
 Después de completar `triple-shot`, `skins-system` y `shield`, se puede utilizar una rama temporal de integración.
 
 Esto permite probar las tres funcionalidades juntas antes de modificar `main`.
+
+> Crear varios Worktrees no integra sus cambios automáticamente. Cada Worktree apunta a una rama; para que `union-worktree` contenga las funcionalidades, hay que integrar en ella las ramas completadas con Git. OpenCode puede ayudar a revisar o resolver conflictos después de esa integración.
 
 ```bash
 triple-shot ────┐
@@ -358,7 +362,7 @@ skins-system ───┼──► union-worktree ───► main
 shield ─────────┘
 ```
 
-## 7.1. Crear la rama de integración
+#### 7.1. Crear la rama de integración
 
 Desde `main`:
 
@@ -374,7 +378,7 @@ git checkout -b union-worktree
 
 ---
 
-## 7.2. Abrir `OpenCode` en la rama de integración
+#### 7.2. Abrir `OpenCode` en la rama de integración
 
 Verificar la rama activa:
 
@@ -390,35 +394,43 @@ union-worktree
 
 ---
 
-## 7.3. Planificar la integración
+#### 7.3. Integrar las ramas y planificar la revisión
 
-En modo `Plan`:
+Primero, desde `union-worktree`, integra las ramas que ya contienen los commits de cada funcionalidad:
 
-```text
-Unifica los tres worktrees skins-system, triple-shot y shield.
-
-Una vez terminado no elimines los worktrees ni realices un commit al branch; ese proceso lo realizaré manualmente.
+```bash
+git merge triple-shot
+git merge skins-system
+git merge shield
 ```
 
-El objetivo es permitir que `OpenCode` analice conjuntamente las tres funcionalidades antes de integrarlas.
+Si aparecen conflictos, resuélvelos y completa el merge —agrega los archivos resueltos y crea el commit correspondiente— antes de iniciar el siguiente. Luego abre OpenCode en esta rama y, en modo `Plan`, solicita revisar la integración conjunta:
+
+```text
+Revisa la integración de las funcionalidades triple-shot, skins-system y shield en esta rama.
+Comprueba que funcionen conjuntamente, identifica conflictos de comportamiento y propón los ajustes necesarios.
+No elimines Worktrees ni ramas.
+```
+
+Los `git merge` registran la integración en la rama. Si OpenCode propone ajustes adicionales, revísalos y registra esos cambios después de validarlos.
 
 ---
 
-## 7.4. Implementar la integración
+#### 7.4. Implementar la integración
 
-En modo `Build`:
+Las ramas ya quedaron fusionadas mediante Git en el paso anterior. Si el plan propone ajustes de código, impleméntalos en `union-worktree` con `Build`:
 
 ```text
 Implementa el plan
 ```
 
-Después se deben revisar los cambios antes de crear el commit.
+Después revisa y prueba el resultado. Los merges ya registran las ramas; crea un commit adicional solo si quedaron ajustes sin registrar.
 
 ---
 
-# 8. Revisar y registrar la integración
+### 8. Revisar y registrar la integración
 
-## 8.1. Verificar la rama
+#### 8.1. Verificar la rama
 
 ```bash
 git switch union-worktree
@@ -436,7 +448,7 @@ La letra `M` indica que existen modificaciones locales.
 
 ---
 
-## 8.2. Revisar el estado
+#### 8.2. Revisar el estado
 
 ```bash
 git status
@@ -446,7 +458,7 @@ Esto permite verificar qué archivos fueron modificados.
 
 ---
 
-## 8.3. Agregar los cambios al staging
+#### 8.3. Agregar los cambios al staging
 
 ```bash
 git add .
@@ -471,7 +483,7 @@ Los archivos están preparados para el próximo commit.
 
 ---
 
-## 8.4. Advertencia LF / CRLF
+#### 8.4. Advertencia LF / CRLF
 
 En Windows puede aparecer:
 
@@ -490,10 +502,12 @@ No significa que `git add` haya fallado.
 
 ---
 
-## 8.5. Crear el commit
+#### 8.5. Crear un commit para ajustes adicionales
+
+Este paso solo aplica si OpenCode realizó ajustes adicionales después de completar los merges. Los conflictos de un merge deben resolverse y registrarse al completar ese merge.
 
 ```bash
-git commit -m "Add union worktrees"
+git commit -m "Resolve integration adjustments"
 ```
 
 Ejemplo:
@@ -506,16 +520,9 @@ create mode 100644 .gitignore
 
 ---
 
-## 8.6. Flujo básico de un commit
+#### 8.6. Cómo se registran los cambios
 
-```bash
-git status
-git add .
-git status
-git commit -m "Add union worktrees"
-```
-
-Conceptualmente:
+El commit guarda los archivos preparados en el staging area dentro del historial del repositorio:
 
 ```text
 Working Directory
@@ -531,7 +538,7 @@ Repository / Commit
 
 ---
 
-# 9. Integrar la rama temporal en `main`
+### 9. Integrar la rama temporal en `main`
 
 Cambiar a:
 
@@ -545,38 +552,13 @@ Realizar el merge:
 git merge union-worktree
 ```
 
-El flujo queda:
-
-```text
-                         main
-                          │
-          ┌───────────────┼───────────────┐
-          │               │               │
-          ▼               ▼               ▼
-     triple-shot      skins-system       shield
-          │               │               │
-          └───────────────┬───────────────┘
-                          │
-                          ▼
-                   union-worktree
-                          │
-                       revisión
-                          │
-                        commit
-                          │
-                        merge
-                          │
-                          ▼
-                         main
-```
-
 ---
 
-# 10. Consultar ramas y Worktrees
+### 10. Consultar ramas y Worktrees
 
 Antes de limpiar el repositorio es útil verificar qué ramas y Worktrees continúan existiendo.
 
-## 10.1. Ver ramas
+#### 10.1. Ver ramas
 
 ```bash
 git branch
@@ -601,7 +583,7 @@ Donde:
 
 ---
 
-## 10.2. Ver Worktrees
+#### 10.2. Ver Worktrees
 
 ```bash
 git worktree list
@@ -624,7 +606,7 @@ Esta información permite conocer:
 
 ---
 
-# 11. Eliminar Worktrees
+### 11. Eliminar Worktrees
 
 Una vez integradas las funcionalidades:
 
@@ -644,14 +626,14 @@ Es preferible utilizar `git worktree remove` en lugar de borrar manualmente los 
 
 ---
 
-# 12. Eliminar ramas temporales
+### 12. Eliminar ramas temporales
 
 Después de eliminar los Worktrees:
 
 ```bash
-git branch -D shield
-git branch -D skins-system
-git branch -D triple-shot
+git branch -d shield
+git branch -d skins-system
+git branch -d triple-shot
 git branch -d union-worktree
 ```
 
@@ -669,11 +651,11 @@ Siempre que sea posible conviene utilizar:
 git branch -d <branch>
 ```
 
-y reservar `-D` para ramas que se sabe que pueden eliminarse.
+`-d` elimina ramas que Git considera integradas. Usa `-D` solo si quieres descartar deliberadamente commits que no se hayan integrado.
 
 ---
 
-# 13. Flujo completo `OpenCode` + Git Worktrees
+### 13. Flujo completo `OpenCode` + Git Worktrees
 
 ```text
                          Git / main
@@ -700,13 +682,15 @@ y reservar `-D` para ramas que se sabe que pueden eliminarse.
                              ▼
                        union-worktree
                              │
+                Merge de las ramas de features
+                             │
                        `OpenCode` Plan
                              │
                        `OpenCode` Build
                              │
-                          Revisión
+                      Prueba conjunta
                              │
-                           Commit
+             Commit si hay ajustes adicionales
                              │
                             Merge
                              │
@@ -722,7 +706,9 @@ y reservar `-D` para ramas que se sabe que pueden eliminarse.
 
 ---
 
-# 14. Integrar `OpenCode` con GitHub
+## Parte II — Integrar OpenCode con GitHub
+
+### 14. Integrar `OpenCode` con GitHub
 
 Documentación oficial:
 
@@ -758,11 +744,19 @@ OpenCode
 
 ---
 
-# 15. Instalar `OpenCode` Agent en GitHub
+### 15. Instalar `OpenCode` Agent en GitHub
 
-## 15.1. Ejecutar la instalación
+#### 15.1. Ejecutar la instalación
 
-Fuera de `OpenCode`, desde una terminal situada dentro del repositorio, ejecutar:
+Desde una terminal situada dentro del repositorio, actualiza `main` y crea una rama para revisar el workflow que generará el instalador:
+
+```bash
+git switch main
+git pull --ff-only
+git switch -c chore/opencode-github-agent
+```
+
+Ejecuta fuera de OpenCode:
 
 ```bash
 opencode github install
@@ -802,6 +796,8 @@ Una salida posible:
     3. Go to a GitHub issue and comment `/oc summarize`
 ```
 
+Los nombres del proveedor, modelo y pasos siguientes dependen de la configuración elegida y pueden variar.
+
 El workflow generado en este proyecto puede consultarse directamente en:
 
 [`.github/workflows/opencode.yml`](https://github.com/MLahuasi/opencode-asteroids/blob/main/.github/workflows/opencode.yml)
@@ -812,7 +808,7 @@ También se pueden consultar los workflows del proyecto desde:
 
 ---
 
-## 15.2. Administrar `OpenCode` Agent en GitHub
+#### 15.2. Administrar `OpenCode` Agent en GitHub
 
 Durante la instalación se agrega `OpenCode Agent` a GitHub.
 
@@ -833,7 +829,7 @@ Desde esta sección se puede:
 
 ---
 
-## 15.3. Configurar la API Key del proveedor
+#### 15.3. Configurar la API Key del proveedor
 
 Si se utiliza OpenAI, se debe configurar:
 
@@ -864,15 +860,18 @@ Desde esta sección se crea el secreto utilizado por el workflow.
 
 ---
 
-## 15.4. Publicar el workflow
+#### 15.4. Publicar el workflow
 
-Subir los cambios a la rama `main` y posteriormente a GitHub:
+Registra el workflow generado y súbelo desde `chore/opencode-github-agent`:
 
 ```bash
-git add .
-git commit -m "Configure `OpenCode` GitHub agent"
-git push
+git status
+git add .github/workflows/opencode.yml
+git commit -m "Configure OpenCode GitHub agent"
+git push -u origin chore/opencode-github-agent
 ```
+
+Revisa el cambio mediante un Pull Request antes de integrarlo en `main`.
 
 El archivo publicado puede revisarse directamente en:
 
@@ -880,9 +879,9 @@ El archivo publicado puede revisarse directamente en:
 
 ---
 
-# 16. Realizar cambios desde GitHub Issues
+### 16. Realizar cambios desde GitHub Issues
 
-## 16.1. Habilitar Issues
+#### 16.1. Habilitar Issues
 
 Si `Issues` no se encuentra habilitado, ingresar dentro del repositorio en:
 
@@ -913,7 +912,7 @@ Repository
 
 ---
 
-## 16.2. Crear un Issue
+#### 16.2. Crear un Issue
 
 Desde `Issues`, crear un nuevo Issue.
 
@@ -931,7 +930,7 @@ Al usar esta nueva nave el jugador debe recibir el doble de puntos.
 
 ---
 
-## 16.3. Delegar la implementación a OpenCode
+#### 16.3. Delegar la implementación a OpenCode
 
 Agregar un comentario al Issue:
 
@@ -945,7 +944,7 @@ OpenCode empieza a implementar el cambio mediante GitHub Actions.
 
 ---
 
-# 17. Pull Request generado por OpenCode
+### 17. Pull Request generado por OpenCode
 
 Cuando la tarea requiere modificar código, `OpenCode` puede:
 
@@ -972,7 +971,7 @@ Por ejemplo:
 
 ---
 
-# 18. Validar localmente el Pull Request
+### 18. Validar localmente el Pull Request
 
 Antes de realizar el merge se puede revisar la implementación localmente.
 
@@ -1015,7 +1014,7 @@ Después se puede:
 
 ---
 
-# 19. Aprobar el Pull Request
+### 19. Aprobar el Pull Request
 
 Si los cambios son correctos, realizar el merge desde GitHub.
 
@@ -1046,7 +1045,7 @@ El Issue puede quedar cerrado después de completar la funcionalidad.
 
 ---
 
-# 20. Flujo GitHub Issue → `OpenCode` → Pull Request
+### 20. Flujo GitHub Issue → `OpenCode` → Pull Request
 
 ```text
 GitHub Issue
@@ -1079,9 +1078,21 @@ Este flujo permite solicitar trabajo a `OpenCode` directamente desde GitHub sin 
 
 ---
 
-# 21. GitHub Actions personalizados con OpenCode
+## Parte III — Automatizar tareas con GitHub Actions
+
+### 21. GitHub Actions personalizados con OpenCode
 
 OpenCode también puede utilizarse dentro de workflows personalizados.
+
+Antes de implementar uno, crea una rama desde la versión actualizada de `main` y trabaja en ella. Así podrás revisar el workflow en un Pull Request antes de publicarlo.
+
+Por ejemplo:
+
+```bash
+git switch main
+git pull --ff-only
+git switch -c automation/issue-labeler
+```
 
 Por ejemplo, se puede crear una automatización que se ejecute cuando se crea un nuevo Issue.
 
@@ -1091,7 +1102,7 @@ Los workflows del proyecto pueden consultarse en:
 
 ---
 
-## 21.1. Solicitar el workflow
+#### 21.1. Solicitar el workflow
 
 En modo `Plan`:
 
@@ -1111,7 +1122,7 @@ Después revisar el plan e implementarlo desde `Build`.
 
 ---
 
-# 22. Configurar permisos de OpenCode
+### 22. Configurar permisos de OpenCode
 
 Para configurar permisos específicos del proyecto se puede utilizar el archivo:
 
@@ -1155,7 +1166,7 @@ Solo deben habilitarse los permisos realmente necesarios para el proyecto.
 
 ---
 
-# 23. Permisos del GitHub Action
+### 23. Permisos del GitHub Action
 
 El workflow tiene su propio sistema de permisos.
 
@@ -1187,7 +1198,7 @@ Los permisos de GitHub Actions se definen dentro del workflow correspondiente en
 
 ---
 
-# 24. Eventos automáticos de GitHub
+### 24. Eventos automáticos de GitHub
 
 OpenCode no necesita ejecutarse únicamente mediante comentarios `/oc`.
 
@@ -1224,16 +1235,18 @@ Reorganiza su contenido para mejorar su claridad sin modificar la intención ori
 
 ---
 
-# 25. Publicar el GitHub Action personalizado
+### 25. Publicar el GitHub Action personalizado
 
-Una vez implementado con `Build` y revisado el resultado:
+Una vez implementado con `Build` y revisado el resultado, confirma que estás en la rama de trabajo y registra el workflow:
 
 ```bash
-git pull --rebase origin main
-git add .
+git status
+git add .github/workflows/<workflow>.yml
 git commit -m "GitHub Action - Issue Labeler"
-git push
+git push -u origin automation/issue-labeler
 ```
+
+Abre un Pull Request para integrar el cambio en `main`.
 
 Los workflows publicados pueden consultarse directamente en:
 
@@ -1241,7 +1254,7 @@ Los workflows publicados pueden consultarse directamente en:
 
 ---
 
-# 26. Probar el etiquetado automático
+### 26. Probar el etiquetado automático
 
 En GitHub crear un nuevo Issue.
 
@@ -1265,7 +1278,7 @@ enhancement
 
 ---
 
-# 27. Implementar posteriormente el Issue
+### 27. Implementar posteriormente el Issue
 
 La clasificación automática del Issue y su implementación pueden mantenerse como procesos independientes.
 
@@ -1287,49 +1300,21 @@ OpenCode podrá iniciar el proceso de implementación y crear el correspondiente
 
 ---
 
-## 27.1. Validar los cambios
+#### 27.1. Validar los cambios
 
-Actualizar las referencias remotas:
-
-```bash
-git fetch origin
-git branch -r
-```
-
-Cambiar a la rama generada:
-
-```bash
-git switch opencode/issue6-20260909171116
-```
-
-Actualizar:
-
-```bash
-git pull
-```
-
-Validar la implementación.
-
-Si todo está correcto:
-
-1. Realizar el merge desde GitHub.
-2. Eliminar la rama remota.
-3. Actualizar las referencias locales.
-
-```bash
-git fetch --prune origin
-git branch -r
-```
+Aplica el mismo procedimiento de las secciones 18 y 19: trae la rama, revisa y prueba los cambios, integra el Pull Request y limpia las referencias remotas. En este ejemplo, la rama generada es `opencode/issue6-20260909171116`.
 
 ---
 
-# 28. Referencias del proyecto
+## Referencias y visión general
 
-## Repositorio
+### 28. Referencias del proyecto
+
+#### Repositorio
 
 [OpenCode Asteroids](https://github.com/MLahuasi/opencode-asteroids)
 
-## Archivos
+#### Archivos
 
 - [`.github/workflows/opencode.yml`](https://github.com/MLahuasi/opencode-asteroids/blob/main/.github/workflows/opencode.yml)
 - [`.github/workflows/`](https://github.com/MLahuasi/opencode-asteroids/tree/main/.github/workflows)
@@ -1338,12 +1323,12 @@ git branch -r
 - [`opencode.json`](https://github.com/MLahuasi/opencode-asteroids/blob/main/opencode.json)
 - [`.gitignore`](https://github.com/MLahuasi/opencode-asteroids/blob/main/.gitignore)
 
-## Documentación oficial
+#### Documentación oficial
 
 - [OpenCode - Commands](https://opencode.ai/docs/commands/)
 - [OpenCode - GitHub](https://opencode.ai/docs/github/)
 
-## Rutas importantes de configuración en GitHub
+#### Rutas importantes de configuración en GitHub
 
 ```text
 settings/installations
@@ -1365,7 +1350,7 @@ Permite habilitar `Issues` en el repositorio.
 
 ---
 
-# 29. Flujo completo `OpenCode` + Git + GitHub
+### 29. Flujo completo `OpenCode` + Git + GitHub
 
 ```text
                             OpenCode
