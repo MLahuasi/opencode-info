@@ -1,4 +1,6 @@
-# OpenCode - TUI (Terminal User Interface)
+# OpenCode: TUI (Terminal User Interface)
+
+Esta guía cubre el uso de OpenCode desde la terminal: navegación, sesiones, contexto, herramientas y flujo de trabajo Plan/Build. Los atajos y comandos se conservan como están documentados en este material.
 
 ## 1. Iniciar OpenCode
 
@@ -25,9 +27,9 @@ OpenCode se iniciará utilizando el directorio actual como proyecto de trabajo.
 
 ---
 
-# 2. Comandos básicos de la TUI
+## 2. Comandos básicos de la TUI
 
-## Mostrar comandos
+### Mostrar comandos
 
 El atajo:
 
@@ -39,7 +41,7 @@ muestra los comandos disponibles de OpenCode.
 
 ---
 
-## Borrar el prompt
+### Borrar el prompt
 
 Para borrar todo el texto escrito actualmente en el prompt:
 
@@ -55,7 +57,7 @@ Ctrl + W
 
 ---
 
-## Referenciar archivos con `@`
+### Referenciar archivos con `@`
 
 El carácter:
 
@@ -82,7 +84,7 @@ También puede utilizarse para cargar documentación específica cuando sea nece
 
 ---
 
-# 3. Comandos `/`
+## 3. Comandos `/`
 
 Al escribir:
 
@@ -108,9 +110,9 @@ Algunos de los principales son:
 
 ---
 
-# 4. Sesiones
+## 4. Sesiones
 
-## Crear una nueva sesión
+### Crear una nueva sesión
 
 El comando:
 
@@ -122,7 +124,7 @@ crea una nueva sesión.
 
 ---
 
-## Continuar la sesión anterior
+### Continuar la sesión anterior
 
 Si se salió de OpenCode accidentalmente o por cualquier otro motivo, se puede recuperar la sesión anterior iniciando OpenCode con:
 
@@ -132,7 +134,7 @@ opencode -c
 
 ---
 
-## Mostrar sesiones anteriores
+### Mostrar sesiones anteriores
 
 El atajo:
 
@@ -147,7 +149,7 @@ Desde esta pantalla se puede seleccionar la sesión con la que se quiere continu
 
 ---
 
-## Renombrar la sesión actual
+### Renombrar la sesión actual
 
 El comando:
 
@@ -161,9 +163,9 @@ Asignar nombres descriptivos a las sesiones facilita encontrarlas posteriormente
 
 ---
 
-# 5. Información de la sesión
+## 5. Información de la sesión
 
-## Barra lateral
+### Barra lateral
 
 El atajo:
 
@@ -189,7 +191,7 @@ B
 
 ---
 
-# 6. Contexto de la conversación
+## 6. Contexto de la conversación
 
 OpenCode muestra un porcentaje `%` que permite conocer cuánto contexto de la sesión se está utilizando.
 
@@ -210,7 +212,7 @@ Un contexto demasiado grande puede hacer que el modelo tenga más dificultad par
 
 ---
 
-# 7. Compactar una sesión
+## 7. Compactar una sesión
 
 El comando:
 
@@ -251,7 +253,7 @@ La compactación permite continuar trabajando utilizando un resumen de la sesió
 
 ---
 
-# 8. Modo Shell
+## 8. Modo Shell
 
 El carácter:
 
@@ -299,11 +301,11 @@ Backspace
 
 ---
 
-# 9. Undo y Redo
+## 9. Undo y Redo
 
 OpenCode permite navegar entre versiones anteriores de la conversación.
 
-## Undo
+### Undo
 
 El comando:
 
@@ -324,7 +326,7 @@ Sin Git configurado, puede regresar al estado anterior de la conversación pero 
 
 ---
 
-## Redo
+### Redo
 
 El comando:
 
@@ -345,13 +347,13 @@ Sin Git configurado, puede restaurar el estado del chat, pero no necesariamente 
 
 ---
 
-# 10. Configurar Git para Undo y Redo
+## 10. Configurar Git para Undo y Redo
 
 Para que `/undo` y `/redo` puedan restaurar también los cambios realizados sobre los archivos, el proyecto debe estar asociado a Git.
 
 Es recomendable realizar esta configuración directamente desde la terminal normal para no utilizar tokens innecesariamente.
 
-## Inicializar Git
+### Inicializar Git
 
 Desde el directorio del proyecto:
 
@@ -361,7 +363,7 @@ git init
 
 ---
 
-## Agregar los archivos
+### Agregar los archivos
 
 ```bash
 git add .
@@ -369,7 +371,7 @@ git add .
 
 ---
 
-## Crear el primer commit
+### Crear el primer commit
 
 ```bash
 git commit -m "first commit"
@@ -379,7 +381,7 @@ El proyecto tendrá ahora un estado inicial que Git puede utilizar como referenc
 
 ---
 
-## Reiniciar OpenCode
+### Reiniciar OpenCode
 
 Después de configurar Git, ingresar nuevamente a OpenCode:
 
@@ -400,7 +402,7 @@ y sus respectivos atajos pueden utilizar Git para revertir o restaurar también 
 
 ---
 
-# 11. `/init` y `AGENTS.md`
+## 11. `/init` y `AGENTS.md`
 
 El comando:
 
@@ -418,7 +420,7 @@ Este archivo contiene instrucciones y contexto que OpenCode utilizará para trab
 
 ---
 
-## Crear primero `README.md`
+### Crear primero `README.md`
 
 Antes de ejecutar `/init` es **muy importante crear un `README.md` explicando claramente qué se quiere realizar en el proyecto**.
 
@@ -468,7 +470,7 @@ OpenCode analiza el proyecto y puede generar un `AGENTS.md` similar a:
 
 ---
 
-## Mantener `AGENTS.md` pequeño
+### Mantener `AGENTS.md` pequeño
 
 `AGENTS.md` no debería ser demasiado extenso.
 
@@ -486,7 +488,7 @@ Por ejemplo:
 
 ---
 
-## Separar reglas específicas
+### Separar reglas específicas
 
 Cuando existe documentación más extensa, es mejor mantenerla en archivos separados.
 
@@ -516,7 +518,7 @@ Esto ayuda a controlar el crecimiento del contexto.
 
 ---
 
-# 12. Patrones a ignorar
+## 12. Patrones a ignorar
 
 OpenCode respeta las declaraciones existentes en:
 
@@ -534,7 +536,7 @@ Para estos casos se puede utilizar:
 
 ---
 
-## Ejemplo
+### Ejemplo
 
 Supongamos un monorepo donde existe:
 
@@ -564,7 +566,7 @@ Esto ayuda a evitar:
 
 ---
 
-## Diferencia práctica
+### Diferencia práctica
 
 `.gitignore` controla principalmente qué archivos o directorios no deben ser administrados por Git.
 
@@ -580,7 +582,7 @@ Esto resulta especialmente útil en:
 
 ---
 
-# 13. Plan Mode y Build Mode
+## 13. Plan Mode y Build Mode
 
 OpenCode permite separar el análisis de una tarea de su implementación.
 
@@ -599,7 +601,7 @@ Tab
 
 ---
 
-# 14. Plan Mode
+## 14. Plan Mode
 
 Presionar:
 
@@ -630,7 +632,7 @@ Una vez definido correctamente el plan, en `Build` se puede utilizar un modelo m
 
 ---
 
-# 15. Ejemplo de Plan Mode
+## 15. Ejemplo de Plan Mode
 
 Solicitud:
 
@@ -703,7 +705,7 @@ En este punto todavía estamos definiendo qué se debe hacer.
 
 ---
 
-# 16. Pasar de Plan a Build
+## 16. Pasar de Plan a Build
 
 Para ejecutar el plan se debe cambiar al modo:
 
@@ -768,7 +770,7 @@ sigue funcionando con Tailwind.
 
 ---
 
-# 17. Continuar trabajando en Build
+## 17. Continuar trabajando en Build
 
 Una vez dentro de `Build`, se pueden realizar modificaciones adicionales directamente.
 
@@ -825,7 +827,7 @@ Tarea compleja
 
 ---
 
-# 18. Resumen de atajos
+## 18. Resumen de atajos
 
 | Acción                               | Comando               |
 | ------------------------------------ | --------------------- |
@@ -851,7 +853,7 @@ Tarea compleja
 
 ---
 
-# 19. Recomendaciones generales
+## 19. Recomendaciones generales
 
 1. Ejecutar OpenCode desde el directorio del proyecto.
 
