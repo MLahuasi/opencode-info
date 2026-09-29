@@ -32,9 +32,9 @@ CI/CD
 
 ---
 
-# 1. Preparar el proyecto
+## 1. Preparar el proyecto
 
-## 1.1. Documentar los requerimientos
+### 1.1. Documentar los requerimientos
 
 Antes de solicitar la implementación es recomendable documentar claramente qué debe hacer la aplicación.
 
@@ -68,7 +68,7 @@ Mientras más claras sean las instrucciones, menor será la cantidad de decision
 
 ---
 
-## 1.2. Crear manualmente la estructura inicial
+### 1.2. Crear manualmente la estructura inicial
 
 Cuando sea posible, es preferible ejecutar manualmente los comandos relacionados con la creación y configuración inicial del proyecto.
 
@@ -88,7 +88,7 @@ Esto permite:
 
 ---
 
-## 1.3. Configurar los scripts
+### 1.3. Configurar los scripts
 
 Los scripts principales también pueden configurarse manualmente.
 
@@ -109,7 +109,7 @@ Antes de delegar tareas a OpenCode conviene comprobar que los comandos básicos 
 
 ---
 
-# 2. Generar `AGENTS.md`
+## 2. Generar `AGENTS.md`
 
 Una vez preparada la estructura inicial y la documentación del proyecto, ejecutar OpenCode dentro del repositorio y utilizar:
 
@@ -144,7 +144,7 @@ Puede modificarse manualmente para:
 
 ---
 
-# 3. Diseñar la implementación con `Plan`
+## 3. Diseñar la implementación con `Plan`
 
 Para desarrollar una funcionalidad es recomendable comenzar trabajando en:
 
@@ -184,7 +184,7 @@ un plan de implementación.
 
 ---
 
-# 4. Revisar el plan
+## 4. Revisar el plan
 
 Durante la planificación OpenCode puede solicitar información adicional o presentar diferentes alternativas.
 
@@ -213,7 +213,7 @@ No es recomendable pasar a `Build` hasta comprender y aprobar el plan propuesto.
 
 ---
 
-# 5. Implementar usando `Build`
+## 5. Implementar usando `Build`
 
 Una vez revisado y aprobado el plan, cambiar a:
 
@@ -246,7 +246,7 @@ Esto no significa que `Build` no requiera razonamiento, sino que gran parte de l
 
 ---
 
-# 6. Revisar la implementación
+## 6. Revisar la implementación
 
 Después de cada implementación se deben analizar los archivos modificados.
 
@@ -277,7 +277,7 @@ Los comandos concretos dependerán de cada proyecto.
 
 ---
 
-# 7. Realizar ajustes posteriores
+## 7. Realizar ajustes posteriores
 
 Si después de revisar la implementación se requieren cambios adicionales, se puede documentar la revisión en un archivo:
 
@@ -308,7 +308,7 @@ Testing
 
 ---
 
-# 8. Control de versiones con Git
+## 8. Control de versiones con Git
 
 Git es fundamental cuando se trabaja con agentes que pueden modificar múltiples archivos automáticamente.
 
@@ -371,7 +371,7 @@ git branch -d feature/colors
 
 ---
 
-# 9. Revertir cambios generados por OpenCode
+## 9. Revertir cambios generados por OpenCode
 
 Si OpenCode realizó modificaciones que se quieren descartar antes de realizar un commit, Git permite recuperar el estado anterior.
 
@@ -407,7 +407,7 @@ y únicamente después decidir si se descartan los cambios.
 
 ---
 
-# 10. Publicar el proyecto en GitHub
+## 10. Publicar el proyecto en GitHub
 
 Una vez creado el repositorio remoto, se puede vincular el proyecto local.
 
@@ -432,7 +432,7 @@ por los valores correspondientes.
 
 ---
 
-# 11. Pull Requests
+## 11. Pull Requests
 
 Aunque es posible integrar cambios directamente mediante `merge`, para proyectos importantes es recomendable utilizar Pull Requests.
 
@@ -469,7 +469,7 @@ Los Pull Requests permiten:
 
 ---
 
-# 12. Pruebas automáticas
+## 12. Pruebas automáticas
 
 El testing debe formar parte del flujo de desarrollo y no ser una tarea opcional posterior.
 
@@ -523,7 +523,7 @@ Antes de aprobar los cambios se debe comprobar:
 
 ---
 
-# 13. GitHub Actions
+## 13. GitHub Actions
 
 GitHub Actions puede utilizarse para automatizar:
 
@@ -580,7 +580,7 @@ Después de revisar y aprobar el plan se puede pasar a `Build`.
 
 ---
 
-# 14. Validar GitHub Actions
+## 14. Validar GitHub Actions
 
 Después de crear o modificar el workflow:
 
@@ -616,7 +616,7 @@ Algunas causas frecuentes son:
 
 ---
 
-# 15. Releases y ejecutables
+## 15. Releases y ejecutables
 
 Si el workflow finaliza correctamente, puede crear automáticamente un GitHub Release.
 
@@ -642,7 +642,7 @@ pueden incluirse como documentación si son necesarios, pero nunca deben contene
 
 ---
 
-# 16. Seguridad de los entregables
+## 16. Seguridad de los entregables
 
 Los ejecutables generados deben considerarse artefactos sensibles de distribución.
 
@@ -663,7 +663,7 @@ Un ejecutable descargado desde Internet también puede generar advertencias de s
 
 ---
 
-# 17. Flujo completo recomendado
+## 17. Flujo completo recomendado
 
 El proceso completo puede resumirse así:
 
@@ -705,11 +705,11 @@ Configuración inicial manual
 
 ---
 
-# 18. Checklist de revisión
+## 18. Checklist de revisión
 
 Antes de aprobar una implementación generada por OpenCode comprobar:
 
-## Código
+### Código
 
 - [ ] ¿Se entiende el código generado?
 - [ ] ¿Se comprende qué hace cada componente importante?
@@ -718,21 +718,21 @@ Antes de aprobar una implementación generada por OpenCode comprobar:
 - [ ] ¿La arquitectura sigue siendo coherente?
 - [ ] ¿El código puede simplificarse?
 
-## Dependencias
+### Dependencias
 
 - [ ] ¿OpenCode instaló nuevas dependencias?
 - [ ] ¿Qué dependencias instaló?
 - [ ] ¿Son realmente necesarias?
 - [ ] ¿Existe una solución utilizando herramientas ya disponibles?
 
-## Configuración
+### Configuración
 
 - [ ] ¿Se modificaron archivos de configuración?
 - [ ] ¿Los cambios eran necesarios?
 - [ ] ¿Se agregaron variables de entorno?
 - [ ] ¿Se evitaron secretos dentro del repositorio?
 
-## Testing
+### Testing
 
 - [ ] ¿Se ejecutaron los tests?
 - [ ] ¿Qué comportamiento cubren?
@@ -740,14 +740,14 @@ Antes de aprobar una implementación generada por OpenCode comprobar:
 - [ ] ¿La nueva funcionalidad rompió otra existente?
 - [ ] ¿El CI falla correctamente cuando un test falla?
 
-## Build
+### Build
 
 - [ ] ¿La aplicación compila correctamente?
 - [ ] ¿La aplicación se ejecutó manualmente?
 - [ ] ¿Los ejecutables generados funcionan?
 - [ ] ¿Se probaron las plataformas soportadas?
 
-## Git
+### Git
 
 - [ ] ¿Se creó una rama antes de realizar cambios importantes?
 - [ ] ¿Los cambios fueron revisados antes del `merge`?
@@ -755,7 +755,7 @@ Antes de aprobar una implementación generada por OpenCode comprobar:
 - [ ] ¿El commit representa correctamente los cambios?
 - [ ] ¿Sería conveniente utilizar un Pull Request?
 
-## GitHub Actions
+### GitHub Actions
 
 - [ ] ¿El workflow ejecuta los tests antes de publicar?
 - [ ] ¿El workflow se detiene ante errores?
