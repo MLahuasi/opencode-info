@@ -22,20 +22,21 @@ Este repositorio reúne guías, conceptos y ejemplos para trabajar con OpenCode.
 10. [MCPs y agentes personalizados](./10-opencode-mcp.md) — configurar MCP y conocer su relación con agentes y herramientas.
 11. [Agentes personalizados](./11-opencode-custom-agent.md) — definir subagentes especializados, instrucciones y permisos.
 12. [Comandos personalizados](./12-opencode-commads.md) — crear comandos reutilizables para automatizar tareas frecuentes.
+13. [Resumen de comandos e instrucciones](./opencode-summarize-commands.md) — consultar comandos documentados de Git, OpenCode y herramientas de desarrollo, con ejemplos y enlaces a sus guías.
 
 ## 4. Referencia de modelos
 
-13. [Modelos OpenAI](./modelos.openaai.md) — orientación de modelos por capacidad y nivel de esfuerzo (Low, Medium y High) para distintos tipos de tareas.
+14. [Modelos OpenAI](./modelos.openaai.md) — orientación de modelos por capacidad y nivel de esfuerzo (Low, Medium y High) para distintos tipos de tareas.
 
 ## 5. Laboratorio: aplicación OpenDayCare
 
 Estos documentos reúnen ejemplos de aplicación de los temas anteriores en un proyecto. OpenDayCare funciona como laboratorio dentro del material, junto con los demás ejemplos y guías.
 
-14. [Home y feed](./opencode-daycare/home.md) — especificar la pantalla principal, sus referencias visuales y sus criterios de aceptación.
-15. [Listado y perfiles de niños](./opencode-daycare/kids.md) — dividir el trabajo en specs, organizar mocks, navegación, datos y criterios de aceptación.
-16. [Agregar y editar niños](./opencode-daycare/add-edit-kid.md) — formularios, validación, salas, alergias y almacenamiento temporal en mocks JSON.
-17. [Organizar la arquitectura](./opencode-daycare/organice-architecture.md) — planificar una reorganización incremental, implementar por pasos y preparar la integración.
-18. [Login y activación de cuenta](./opencode-daycare/login-activate.md) — tipos y flujos iniciales de acceso y activación.
-19. [Configurar el correo de invitación](./opencode-daycare/email.md) — integrar un servicio de correo y definir una plantilla acorde a la marca.
-20. [Vincular padres y completar la activación](./opencode-daycare/activate-account.md) — flujo de invitación, generación de código, envío de correo y acceso.
-21. [Crear y actualizar publicaciones](./opencode-daycare/create-update-post.md) — publicaciones, selección de imágenes, persistencia temporal y feed para familias.
+15. [Home y feed](./opencode-daycare/home.md) — especificar la pantalla principal, sus referencias visuales y sus criterios de aceptación.
+16. [Listado y perfiles de niños](./opencode-daycare/kids.md) — dividir el trabajo en specs, organizar mocks, navegación, datos y criterios de aceptación.
+17. [Agregar y editar niños](./opencode-daycare/add-edit-kid.md) — formularios, validación, salas, alergias y almacenamiento temporal en mocks JSON.
+18. [Organizar la arquitectura](./opencode-daycare/organice-architecture.md) — planificar una reorganización incremental, implementar por pasos y preparar la integración.
+19. [Login y activación de cuenta](./opencode-daycare/login-activate.md) — tipos y flujos iniciales de acceso y activación.
+20. [Configurar el correo de invitación](./opencode-daycare/email.md) — integrar un servicio de correo y definir una plantilla acorde a la marca.
+21. [Vincular padres y completar la activación](./opencode-daycare/activate-account.md) — flujo de invitación, generación de código, envío de correo y acceso.
+22. [Crear y actualizar publicaciones](./opencode-daycare/create-update-post.md) — publicaciones, selección de imágenes, persistencia temporal y feed para familias.
