@@ -33,13 +33,13 @@ npx create-next-app@latest open-daycare
 npm run dev
 ```
 
-En este proyecto de ejemplo, Next.js mantiene un bloque de instrucciones para agentes dentro de [`AGENTS.md`](../open-daycare/AGENTS.md). Ese bloque apunta a la documentación local de la versión instalada, ubicada en `node_modules/next/dist/docs/`, y puede actualizarse al ejecutar `next dev`.
+En el [repositorio del proyecto](https://github.com/MLahuasi/opencode-daycare), Next.js mantiene un bloque de instrucciones para agentes dentro de [`AGENTS.md`](https://github.com/MLahuasi/opencode-daycare/blob/main/AGENTS.md). Ese bloque apunta a la documentación local de la versión instalada, ubicada en `node_modules/next/dist/docs/`, y puede actualizarse al ejecutar `next dev`.
 
 ![](./assets/12-open-care-next-ia-docs.png)
 
-El archivo [`CLAUDE.md`](../open-daycare/CLAUDE.md) referencia `AGENTS.md` para que Claude Code también considere las instrucciones del proyecto.
+El archivo [`CLAUDE.md`](https://github.com/MLahuasi/opencode-daycare/blob/main/CLAUDE.md) referencia `AGENTS.md` para que Claude Code también considere las instrucciones del proyecto.
 
-Las plantillas HTML y las imágenes de referencia se guardan en [`references/`](../open-daycare/references/). Se pueden preparar con herramientas de diseño asistido por IA, por ejemplo [Claude Design](https://claude.ai/design), [V0](https://v0.app/), [Lovable](https://lovable.dev/), [Google Stitch](https://stitch.withgoogle.com/) o [Bolt](https://bolt.new/).
+Las plantillas HTML y las imágenes de referencia se guardan en [`references/`](https://github.com/MLahuasi/opencode-daycare/tree/main/references). Se pueden preparar con herramientas de diseño asistido por IA, por ejemplo [Claude Design](https://claude.ai/design), [V0](https://v0.app/), [Lovable](https://lovable.dev/), [Google Stitch](https://stitch.withgoogle.com/) o [Bolt](https://bolt.new/).
 
 ## 2. Configurar MCPs en OpenCode
 
@@ -70,7 +70,7 @@ Desde la raíz del proyecto, agrega la configuración local de OpenCode a `openc
 
 Esta es la estructura que utiliza OpenCode. La guía de Playwright muestra una configuración genérica para otros clientes MCP; en OpenCode, la entrada se declara dentro de `mcp`.
 
-En este proyecto, la configuración se encuentra en [`opencode.json`](../open-daycare/opencode.json). Para la configuración global, consulta la [guía de configuración de OpenCode](https://opencode.ai/docs/config/).
+En este proyecto, la configuración se encuentra en [`opencode.json`](https://github.com/MLahuasi/opencode-daycare/blob/main/opencode.json). Para la configuración global, consulta la [guía de configuración de OpenCode](https://opencode.ai/docs/config/).
 
 #### 2.1.2 Resolver problemas de `PATH` con NVM
 
@@ -156,7 +156,7 @@ captura un screenshot
 
 ![Captura adicional del Home](./assets/16-opencode-mcp-local-screenshot-home-screenshot.png)
 
-Para que el agente guarde las capturas en un directorio específico, puedes agregar una regla en [`AGENTS.md`](../open-daycare/AGENTS.md):
+Para que el agente guarde las capturas en un directorio específico, puedes agregar una regla en [`AGENTS.md`](https://github.com/MLahuasi/opencode-daycare/blob/main/AGENTS.md):
 
 ```md
 ## MCPs
@@ -343,7 +343,7 @@ Referencias: [Authentication](https://nextjs.org/docs/app/guides/authentication)
 
 La instalación y el uso de las Skills `spec` y `spec-impl` se explican en [09-opencode-spec-driven-development.md](./09-opencode-spec-driven-development.md). Este documento se enfoca en cómo combinar esas instrucciones con las herramientas MCP.
 
-En [`AGENTS.md`](../open-daycare/AGENTS.md), describe cuándo debe usar cada MCP. La sección 4.1 incluye un ejemplo de estas reglas junto con las demás instrucciones del proyecto.
+En [`AGENTS.md`](https://github.com/MLahuasi/opencode-daycare/blob/main/AGENTS.md), describe cuándo debe usar cada MCP. La sección 4.1 incluye un ejemplo de estas reglas junto con las demás instrucciones del proyecto.
 
 ---
 
@@ -405,7 +405,7 @@ El siguiente ejemplo reúne las instrucciones utilizadas en el proyecto: el fluj
 
 ### 4.2 Inicializar OpenCode y ejecutar la aplicación
 
-Desde la raíz del proyecto, abre OpenCode. Si solicitas `/init`, indica que debe revisar y completar las instrucciones existentes sin eliminar las reglas de Next.js ni reemplazar el contenido de [`AGENTS.md`](../open-daycare/AGENTS.md).
+Desde la raíz del proyecto, abre OpenCode. Si solicitas `/init`, indica que debe revisar y completar las instrucciones existentes sin eliminar las reglas de Next.js ni reemplazar el contenido de [`AGENTS.md`](https://github.com/MLahuasi/opencode-daycare/blob/main/AGENTS.md).
 
 Puedes pedir primero el análisis en modo `Plan`:
 
