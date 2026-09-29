@@ -4,35 +4,13 @@
 >
 > Cada cambio generado debe ser revisado, comprendido y validado antes de incorporarlo al proyecto.
 
-Una forma práctica de trabajar con OpenCode consiste en preparar primero el proyecto y su documentación, utilizar `Plan` para diseñar los cambios y posteriormente utilizar `Build` para implementarlos.
-
-El flujo general es:
-
-```text
-Documentar requerimientos
-        ↓
-Crear/configurar proyecto
-        ↓
-Generar AGENTS.md
-        ↓
-Plan
-        ↓
-Revisar plan
-        ↓
-Build
-        ↓
-Revisar implementación
-        ↓
-Testing
-        ↓
-Git
-        ↓
-CI/CD
-```
+Una forma práctica de trabajar con OpenCode consiste en preparar primero el proyecto y su documentación, utilizar `Plan` para diseñar los cambios y posteriormente utilizar `Build` para implementarlos. Al final se resumen las etapas de validación, versionado e integración continua.
 
 ---
 
-## 1. Preparar el proyecto
+## I. Preparar el proyecto y las instrucciones
+
+## 1. Definir y configurar el proyecto
 
 ### 1.1. Documentar los requerimientos
 
@@ -143,6 +121,8 @@ Puede modificarse manualmente para:
 `AGENTS.md` no debe considerarse correcto únicamente porque fue generado automáticamente.
 
 ---
+
+## II. Planificar e implementar con OpenCode
 
 ## 3. Diseñar la implementación con `Plan`
 
@@ -264,14 +244,13 @@ Es importante revisar:
 - Archivos eliminados.
 - Cambios no solicitados.
 
-También es recomendable verificar:
+Verifica la compilación con el comando correspondiente al proyecto. En este ejemplo:
 
 ```bash
 bun run build
-bun test
 ```
 
-Los comandos concretos dependerán de cada proyecto.
+Los comandos concretos dependerán de cada proyecto. La configuración y ejecución de pruebas automatizadas se explica en la sección 8.
 
 > No se debe asumir que una implementación es correcta únicamente porque compila.
 
@@ -308,7 +287,65 @@ Testing
 
 ---
 
-## 8. Control de versiones con Git
+## III. Verificar con pruebas
+
+## 8. Pruebas automáticas
+
+El testing debe formar parte del flujo de desarrollo y no ser una tarea opcional posterior.
+
+Para implementar pruebas en una funcionalidad separada se puede crear una rama:
+
+```bash
+git checkout -b feature/testing
+```
+
+Después, en `Plan`, se puede solicitar:
+
+```text
+Desarrolla un plan para implementar testing automático usando Bun.
+
+Requisitos:
+
+- Todos los tests deben almacenarse en ./tests/.
+- La estructura de ./tests/ debe replicar, cuando tenga sentido,
+  la estructura existente dentro de ./src/.
+- Usa las herramientas de testing incluidas con Bun.
+- No agregues dependencias de testing si no son necesarias.
+- La aplicación no debe construirse ni publicarse si los tests fallan.
+- Revisa primero la estructura actual del proyecto antes de proponer cambios.
+```
+
+Después de revisar el plan:
+
+```text
+Build
+```
+
+y solicitar:
+
+```text
+Implementa el plan diseñado.
+```
+
+Los tests pueden ejecutarse mediante:
+
+```bash
+bun test
+```
+
+Antes de aprobar los cambios se debe comprobar:
+
+- Qué funcionalidades fueron probadas.
+- Qué casos de error fueron cubiertos.
+- Si existen tests innecesariamente acoplados a la implementación.
+- Si los tests pueden ejecutarse de forma independiente.
+- Si un fallo realmente provoca que el proceso de CI se detenga.
+
+---
+
+## IV. Versionar y colaborar con Git
+
+## 9. Control de versiones con Git
 
 Git es fundamental cuando se trabaja con agentes que pueden modificar múltiples archivos automáticamente.
 
@@ -371,7 +408,7 @@ git branch -d feature/colors
 
 ---
 
-## 9. Revertir cambios generados por OpenCode
+## 10. Revertir cambios generados por OpenCode
 
 Si OpenCode realizó modificaciones que se quieren descartar antes de realizar un commit, Git permite recuperar el estado anterior.
 
@@ -380,6 +417,8 @@ Para restaurar archivos modificados o eliminados:
 ```bash
 git restore .
 ```
+
+Este comando descarta los cambios locales de los archivos rastreados. Revisa `git status` y `git diff` antes de ejecutarlo; los cambios descartados no se recuperan desde Git si no estaban guardados en otro lugar.
 
 Para eliminar archivos y directorios nuevos que todavía no están registrados por Git:
 
@@ -407,7 +446,7 @@ y únicamente después decidir si se descartan los cambios.
 
 ---
 
-## 10. Publicar el proyecto en GitHub
+## 11. Publicar el proyecto en GitHub
 
 Una vez creado el repositorio remoto, se puede vincular el proyecto local.
 
@@ -432,7 +471,7 @@ por los valores correspondientes.
 
 ---
 
-## 11. Pull Requests
+## 12. Pull Requests
 
 Aunque es posible integrar cambios directamente mediante `merge`, para proyectos importantes es recomendable utilizar Pull Requests.
 
@@ -469,59 +508,7 @@ Los Pull Requests permiten:
 
 ---
 
-## 12. Pruebas automáticas
-
-El testing debe formar parte del flujo de desarrollo y no ser una tarea opcional posterior.
-
-Para implementar pruebas en una funcionalidad separada se puede crear una rama:
-
-```bash
-git checkout -b feature/testing
-```
-
-Después, en `Plan`, se puede solicitar:
-
-```text
-Desarrolla un plan para implementar testing automático usando Bun.
-
-Requisitos:
-
-- Todos los tests deben almacenarse en ./tests/.
-- La estructura de ./tests/ debe replicar, cuando tenga sentido,
-  la estructura existente dentro de ./src/.
-- Usa las herramientas de testing incluidas con Bun.
-- No agregues dependencias de testing si no son necesarias.
-- La aplicación no debe construirse ni publicarse si los tests fallan.
-- Revisa primero la estructura actual del proyecto antes de proponer cambios.
-```
-
-Después de revisar el plan:
-
-```text
-Build
-```
-
-y solicitar:
-
-```text
-Implementa el plan diseñado.
-```
-
-Los tests pueden ejecutarse mediante:
-
-```bash
-bun test
-```
-
-Antes de aprobar los cambios se debe comprobar:
-
-- Qué funcionalidades fueron probadas.
-- Qué casos de error fueron cubiertos.
-- Si existen tests innecesariamente acoplados a la implementación.
-- Si los tests pueden ejecutarse de forma independiente.
-- Si un fallo realmente provoca que el proceso de CI se detenga.
-
----
+## V. Automatizar compilaciones y publicaciones
 
 ## 13. GitHub Actions
 
@@ -662,6 +649,8 @@ Al publicar binarios se deben revisar aspectos como:
 Un ejecutable descargado desde Internet también puede generar advertencias de seguridad del sistema operativo, especialmente cuando no está firmado digitalmente.
 
 ---
+
+## VI. Revisar y cerrar el flujo
 
 ## 17. Flujo completo recomendado
 

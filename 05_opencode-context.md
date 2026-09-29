@@ -34,7 +34,11 @@ Durante una conversación pueden aportar contexto:
 
 El historial de la sesión suele ser el contenido que más crece y que puede resumirse o compactarse cuando deja de ser necesario en detalle.
 
-## 3. Cómo crece una conversación
+## 3. Cómo se construye y crece el contexto
+
+La aplicación combina la información que considera pertinente para formar el contexto de una solicitud. Una parte puede provenir de instrucciones y recursos; otra, de la conversación.
+
+### Ejemplo de acumulación
 
 Una conversación puede acumular mensajes y resultados anteriores:
 
@@ -48,12 +52,12 @@ Solicitud 3: Prompt 1 + Respuesta 1 + Prompt 2 + Respuesta 2 + Prompt 3
 
 Cuanto más historial se incluya en una solicitud, más tokens puede consumir. La cantidad concreta depende del contexto que la aplicación decida enviar.
 
-## 4. Flujo del contexto
+### Flujo de envío
 
 ```mermaid
 flowchart LR
-    A["Instrucciones y recursos<br/>System prompt · Tools · MCP · Skills"]
-    B["Conversación<br/>Mensajes · Respuestas · Archivos · Resultados"]
+    A["Instrucciones y recursos<br/>Mensaje de sistema · Herramientas · MCP · Skills"]
+    B["Conversación<br/>Mensajes · Respuestas · Archivos · Resultados de herramientas"]
     C["Nuevo mensaje"]
     D["Contexto seleccionado<br/>para la solicitud"]
     E["LLM<br/>Stateless"]
@@ -67,23 +71,20 @@ flowchart LR
     F --> B
 ```
 
-La respuesta nueva pasa a formar parte de la conversación. La aplicación puede incluirla en solicitudes posteriores junto con otra información relevante.
+La respuesta nueva pasa a formar parte de la conversación. La aplicación puede incluirla en solicitudes posteriores junto con otra información pertinente.
 
-## 5. Tamaño del contexto y “Smart Zone”
+## 4. Tamaño del contexto y “Smart Zone”
 
 Una ventana de contexto grande no implica que siempre convenga llenarla. Si se envía demasiada información irrelevante, pueden aumentar el consumo de tokens y el costo, y puede resultar más difícil mantener el foco o priorizar instrucciones vigentes.
 
 El rango de **40 % a 60 %** se presenta aquí como una referencia práctica informal, no como un límite técnico universal ni una garantía de calidad:
 
 ```text
-0%                         100%
-┌────────────────┬────────────────┐
-│   SMART ZONE   │   DUMB ZONE     │
-└────────────────┴────────────────┘
-        referencia aproximada: 40%–60%
+0% ──────────── 40%–60% ──────────── 100%
+               referencia informal
 ```
 
-## 6. Compactar el contexto
+## 5. Compactar el contexto
 
 En conversaciones largas, se puede resumir el historial antiguo y conservar la información que todavía guía el trabajo:
 
@@ -95,6 +96,6 @@ Pendientes
 Nuevo mensaje
 ```
 
-El objetivo es reducir el historial que se necesita enviar sin perder decisiones, estado o tareas pendientes que sigan siendo útiles.
+La compactación resume información y puede perder detalles o matices. Revisa el resumen cuando las decisiones sean importantes y procura conservar el estado, las restricciones y los pendientes que todavía guían el trabajo.
 
 > **El modelo no recuerda por sí solo la conversación: la aplicación le proporciona contexto. Cuando ese contexto crece, conviene conservar lo relevante y resumir lo demás.**
