@@ -16,10 +16,10 @@ Este repositorio reúne guías, conceptos y ejemplos para trabajar con OpenCode.
 
 ## 3. Planificar, automatizar y colaborar
 
-7. [Creación automática usando OpenCode](./07_opencode-create-automatic.md) — preparar un proyecto, documentar requisitos y recorrer el flujo de planificación e implementación.
-8. [Integrar OpenCode con Git y GitHub](./08-opencode-github.md) — ramas, commits, merges, worktrees y colaboración mediante GitHub.
+7. [Desarrollo asistido y controlado con OpenCode](./07_opencode-assisted-development.md) — preparar un proyecto, documentar requisitos, planificar, implementar, validar y automatizar entregables.
+8. [Integrar OpenCode con Git y GitHub](./08-opencode-github.md) — temario de ramas, commits, merges, worktrees y colaboración mediante GitHub.
 9. [Spec Driven Development (SDD)](./09-opencode-spec-driven-development.md) — trabajar con specs, Skills, agentes y Git para implementar cambios de forma controlada.
-10. [MCPs y agentes personalizados](./10-opencode-mcp.md) — configurar MCP y conocer su relación con agentes y herramientas.
+10. [MCPs e instrucciones para agentes](./10-opencode-mcp.md) - configurar MCP y conocer su relación con agentes y herramientas.
 11. [Agentes personalizados](./11-opencode-custom-agent.md) — definir subagentes especializados, instrucciones y permisos.
 12. [Comandos personalizados](./12-opencode-commads.md) — crear comandos reutilizables para automatizar tareas frecuentes.
 13. [Resumen de comandos e instrucciones](./opencode-summarize-commands.md) — consultar comandos documentados de Git, OpenCode y herramientas de desarrollo, con ejemplos y enlaces a sus guías.

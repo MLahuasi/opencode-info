@@ -332,3 +332,90 @@ git pull
 ```bash
 git branch -d spec-14-post-detail
 ```
+
+---
+
+## AJUSTE
+
+- En modo `Plan`
+
+```
+/spec
+
+Desde /family-feed, en el menú Feed, actualmente no es posible dar like al hacer clic en el ícono de corazón ni agregar un comentario al dar clic en el ícono comentario.
+
+* El ícono de corazón y el ícono de comentario deben implementarse como componentes reutilizables dentro de @components/ui.
+* Al hacer clic en el ícono de comentario, se debe navegar a /post-comment/new y, al guardar, agregar un registro en feed-comments.json.
+* Al hacer clic en el ícono de corazón, se debe actualizar feed-reactions.json con la reacción correspondiente al post.
+* La reacción y el comentario deben quedar asociados al post correspondiente.
+* Mantener la estructura y convenciones existentes del proyecto.
+* Se debe implementa la opción /post-comment/edit y delete
+* También el padre de familia puede quitar su like
+```
+
+- Una vez concluido en modo `Build`
+
+```text
+crea spec
+```
+
+- Analizar el spec creado [15-family-feed-engagement.md](../../open-daycare/specs/15-family-feed-engagement.md), si hay ajustes solicitarlos, en caso contrario cambiar a estado `Approved`
+
+- Modo `Build`
+
+```text
+/spec-impl @specs/15-family-feed-engagement.md
+```
+
+- Cuando crea la rama `spec-15-family-feed-engagement` relizar el primer commit:
+
+```bash
+git add .
+git commit -m "DayCare - spec-15-family-feed-engagement"
+```
+
+- También se creó el plan:
+
+```md
+## Plan de implementación
+
+1.  Crear y exportar HeartIcon; reutilizar iconos UI en FeedPostCard.
+2.  Agregar updatedAt a comentarios y validar/migrar datos.
+3.  Crear servicios de engagement y retirar contadores duplicados.
+4.  Actualizar proyecciones del feed familiar, personal y detalle.
+5.  Implementar toggle atómico de reacciones.
+6.  Conectar el corazón en /family-feed con estados pending y error.
+7.  Implementar creación de comentarios y /post-comment/new.
+8.  Implementar edición y /post-comment/edit.
+9.  Implementar eliminación física con confirmación.
+10. Actualizar /post-detail con acciones y orden de comentarios.
+11. Revalidar rutas y verificar accesibilidad, autorización y responsive.
+```
+
+- en modo `Build` se debe realizar cada paso, verificar los cambios y ejecutar un commit si todo esta correcto o solictar ajustes.
+
+```bash
+git add .
+git commit -m "DayCare - spec-15-family-feed-engagement - paso"
+```
+
+- Se debe realizar una validación manual, si no hay inconvenientes cambiar a estadp `Implement`
+- Crear `pull request`
+
+```bash
+git push -u origin spec-15-family-feed-engagement
+```
+
+- Aprobar `Pull Request` en `GitHub` y eliminar rama creada ``
+- Actualizar git local:
+
+```bash
+git switch main
+git pull
+```
+
+- Eliminar ramas
+
+```bash
+git branch -d spec-15-family-feed-engagement
+```
