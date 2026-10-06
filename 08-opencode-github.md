@@ -21,6 +21,7 @@ Este temario utiliza un juego de Asteroids para mostrar diferentes formas de int
 6. [Issues y pull requests](./git-github/06-issues-y-pull-requests.md) — delegar tareas desde issues, revisar pull requests y validar cambios localmente.
 7. [Workflows personalizados de GitHub Actions](./git-github/07-github-actions-personalizados.md) — crear automatizaciones, configurar permisos, usar eventos y publicar workflows.
 8. [Referencias](./git-github/08-referencias.md) — repositorio de ejemplo, archivos importantes, documentación oficial y rutas de configuración.
+9. [Aprobación semiautomática de Specs](./git-github/09-spec-revision.md) — ejecutar desde GitHub un validador de Specs mediante OpenCode Agent, workflows, secretos e issues.
 
 ## Modelo general
 
@@ -50,7 +51,7 @@ OpenCode
 
 ## Cómo recorrer el temario
 
-Para el desarrollo local, sigue los documentos 1 a 4. Para trabajar desde GitHub, configura primero el agente en el documento 5 y continúa con los issues y pull requests del documento 6. El documento 7 explica cómo crear workflows personalizados. El documento 8 reúne las referencias utilizadas por todo el temario.
+Para el desarrollo local, sigue los documentos 1 a 4. Para trabajar desde GitHub, configura primero el agente en el documento 5 y continúa con los issues y pull requests del documento 6. El documento 7 explica cómo crear workflows personalizados. El documento 8 reúne las referencias utilizadas por todo el temario. El documento 9 explica cómo ejecutar de forma semiautomática el validador de Specs.
 
 ## Flujo completo: OpenCode, Git y GitHub
 
