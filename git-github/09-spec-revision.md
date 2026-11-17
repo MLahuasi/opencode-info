@@ -46,7 +46,7 @@ opencode github install
 git checkout -b 01-actions
 git add .
 git commit -m "OpenDay - Aprobación semiautomática de specs"
-git push -u origin 01-actions
+git push -u 01-actions
 ```
 
 12. Aprobar `spec` en `GitHub`
@@ -59,10 +59,10 @@ git push -u origin 01-actions
 git switch main
 git pull
 git branch -d 01-actions
-git push origin --delete 01-actions
+git push --delete 01-actions
 ```
 
-El comando `git branch -d origin 01-actions` conserva el ejemplo original, pero contiene un error: `git branch -d` debe recibir el nombre de la rama local. La forma corregida es:
+El comando `git branch -d 01-actions` conserva el ejemplo original, pero contiene un error: `git branch -d` debe recibir el nombre de la rama local. La forma corregida es:
 
 ```bash
 git branch -d 01-actions
@@ -72,7 +72,11 @@ git branch -d 01-actions
 
 ![](../assets/30-opencode-revision-spec-semi-automatic-github-add-issue.png)
 
-15. Se añade un comentario anteponiendo el comando `/oc` u `/opencode` y especificando el agente [`spec-acceptance-validator`](https://github.com/MLahuasi/opencode-daycare/blob/main/.opencode/agent/spec-acceptance-validator.md) que se quiere ejecutar:
+15. Se añade un comentario anteponiendo el comando `/oc` u `/opencode` y especificando el agente [`spec-acceptance-validator`](https://github.com/MLahuasi/opencode-daycare/blob/main/.opencode/agent/spec-acceptance-validator.md) que se quiere ejecutar [ver issue 2](https://github.com/MLahuasi/opencode-daycare/issues/26):
+
+```bash
+/oc @spec-acceptance-validator @specs/23-home-new-post-navigation.md
+```
 
 ![](../assets/31-opencode-revision-spec-semi-automatic-github-add-issue-comment.png)
 
