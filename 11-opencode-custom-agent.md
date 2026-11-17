@@ -140,3 +140,8 @@ Cuando termina la validación, el agente actualiza cada casilla solo si comprob�
 - [x] `npm run build` termina correctamente.
 - [x] Las capturas de verificación se almacenan bajo `.playwright-mcp/Home/`.
 ```
+
+
+---
+
+[Índice principal](README.md)

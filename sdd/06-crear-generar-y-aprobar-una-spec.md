@@ -88,3 +88,8 @@ La aprobación representa la transición entre la fase de diseño y la fase de e
 ---
 
 [← Anterior](05-git-y-proteccion-de-main.md) | [Temario](../09-opencode-spec-driven-development.md) | [Siguiente →](07-implementar-validar-e-integrar.md)
+
+
+---
+
+[Índice principal](../README.md)

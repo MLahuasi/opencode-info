@@ -19,3 +19,8 @@ Añadir en [opencode.jsonc](../open-daycare/opencode.json) `lsp` para activar.
 ```
 
 **NOTA**: Activar LSP aumenta el contexto
+
+
+---
+
+[Índice principal](README.md)

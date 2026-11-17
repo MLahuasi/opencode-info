@@ -114,3 +114,8 @@ Este documento reúne comandos e instrucciones que aparecen en la documentación
 | `npx eslint app` | Ejecuta ESLint sobre `app`. | `npx eslint app` | [11-opencode-custom-agent.md](./11-opencode-custom-agent.md) |
 | `npx tsc --noEmit --incremental false` | Comprueba tipos TypeScript sin generar archivos de salida. | `npx tsc --noEmit --incremental false` | [11-opencode-custom-agent.md](./11-opencode-custom-agent.md) |
 | `npm run build` | Ejecuta el script de compilación de la aplicación. | `npm run build` | [11-opencode-custom-agent.md](./11-opencode-custom-agent.md) |
+
+
+---
+
+[Índice principal](README.md)

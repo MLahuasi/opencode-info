@@ -132,3 +132,8 @@ main
 ---
 
 [Temario](../08-opencode-github.md) | [Siguiente →](02-trabajo-paralelo-con-worktrees.md)
+
+
+---
+
+[Índice principal](../README.md)

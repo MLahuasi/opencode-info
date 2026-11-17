@@ -157,3 +157,8 @@ git branch -d 01-custom-skill
 ---
 
 [← Anterior](04-preparar-opencode-para-sdd.md) | [Temario](../09-opencode-spec-driven-development.md) | [Siguiente →](06-crear-generar-y-aprobar-una-spec.md)
+
+
+---
+
+[Índice principal](../README.md)

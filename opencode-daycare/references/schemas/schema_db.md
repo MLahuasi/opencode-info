@@ -399,3 +399,8 @@ This document intentionally does not contain executable migration SQL or client 
 ## Implementation boundary
 
 This file documents the target schema only. Future implementation specs must define the SQL migrations, JSON-to-UUID mapping, seed transaction and Supabase CLI deployment separately.
+
+
+---
+
+[Índice principal](../../../README.md)

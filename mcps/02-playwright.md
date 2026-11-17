@@ -114,3 +114,8 @@ Para que el agente guarde las capturas en un directorio específico, agrega una 
 ```
 
 [← Anterior](01-conceptos-y-configuracion.md) | [Temario](../10-opencode-mcp.md) | [Siguiente →](03-context7.md)
+
+
+---
+
+[Índice principal](../README.md)

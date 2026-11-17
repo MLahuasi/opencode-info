@@ -35,3 +35,8 @@ La consulta anterior produjo una respuesta sobre autenticación y autorización 
 Ese archivo es un ejemplo de salida generada por OpenCode. No debe interpretarse como una guía universal de autenticación ni como una configuración obligatoria para todos los proyectos.
 
 [← Anterior](02-playwright.md) | [Temario](../10-opencode-mcp.md) | [Siguiente →](04-instrucciones-del-agente.md)
+
+
+---
+
+[Índice principal](../README.md)

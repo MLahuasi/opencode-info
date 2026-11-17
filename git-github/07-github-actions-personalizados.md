@@ -231,3 +231,8 @@ Aplica el procedimiento de [validación local](06-issues-y-pull-requests.md#vali
 ---
 
 [← Anterior](06-issues-y-pull-requests.md) | [Temario](../08-opencode-github.md) | [Siguiente →](08-referencias.md)
+
+
+---
+
+[Índice principal](../README.md)

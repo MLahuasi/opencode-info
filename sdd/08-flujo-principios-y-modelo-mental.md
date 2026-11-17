@@ -156,3 +156,8 @@ Este flujo convierte una conversación con un agente en un proceso de desarrollo
 ---
 
 [← Anterior](07-implementar-validar-e-integrar.md) | [Temario](../09-opencode-spec-driven-development.md)
+
+
+---
+
+[Índice principal](../README.md)

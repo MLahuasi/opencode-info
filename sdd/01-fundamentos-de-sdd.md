@@ -79,3 +79,8 @@ No conviene modificar el diseño improvisadamente en medio de la implementación
 ---
 
 [Temario](../09-opencode-spec-driven-development.md) | [Siguiente →](02-la-spec-como-artefacto.md)
+
+
+---
+
+[Índice principal](../README.md)

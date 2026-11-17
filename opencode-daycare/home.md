@@ -78,3 +78,8 @@ En [](../open-daycare/specs/01-home-feed.md) se especificaron los siguientes:
 git switch main
 git merge spec-01-home-feed
 ```
+
+
+---
+
+[Índice principal](../README.md)

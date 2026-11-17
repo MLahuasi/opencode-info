@@ -53,3 +53,8 @@
 ```
 
 [← Volver a las instrucciones del agente](../04-instrucciones-del-agente.md) | [Temario](../../10-opencode-mcp.md)
+
+
+---
+
+[Índice principal](../../README.md)

@@ -88,3 +88,8 @@ Para trabajar con varias sesiones aisladas de OpenCode, consulta [Trabajo parale
 ---
 
 [← Anterior](04-validar-con-pruebas.md) | [Temario](../07_opencode-assisted-development.md) | [Siguiente →](06-automatizar-compilaciones-y-publicaciones.md)
+
+
+---
+
+[Índice principal](../README.md)

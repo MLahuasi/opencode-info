@@ -100,3 +100,8 @@ Si el ajuste cambia el alcance o requiere decisiones nuevas, vuelve a `Plan` y r
 ---
 
 [← Anterior](../07-plan-y-build.md) | [Temario](../../06_opencode_tui.md) | [Siguiente →](../08-referencia-de-atajos.md)
+
+
+---
+
+[Índice principal](../../README.md)

@@ -91,3 +91,8 @@ Después de generarlo, revísalo cuidadosamente. Puede modificarse manualmente p
 ---
 
 [Temario](../07_opencode-assisted-development.md) | [Siguiente →](02-planificar-y-revisar-el-plan.md)
+
+
+---
+
+[Índice principal](../README.md)

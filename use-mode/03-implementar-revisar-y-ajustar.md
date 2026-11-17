@@ -85,3 +85,8 @@ Para un procedimiento detallado de implementación sobre una rama, consulta [Des
 ---
 
 [← Anterior](02-planificar-y-revisar-el-plan.md) | [Temario](../07_opencode-assisted-development.md) | [Siguiente →](04-validar-con-pruebas.md)
+
+
+---
+
+[Índice principal](../README.md)

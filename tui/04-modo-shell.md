@@ -15,3 +15,8 @@ Para salir del modo `shell` sin ejecutar el comando, presiona `Esc`.
 ---
 
 [← Anterior](03-contexto-y-compactacion.md) | [Temario](../06_opencode_tui.md) | [Siguiente →](05-git-undo-redo.md)
+
+
+---
+
+[Índice principal](../README.md)

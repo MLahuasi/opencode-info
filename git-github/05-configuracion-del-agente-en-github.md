@@ -166,3 +166,8 @@ El archivo publicado puede revisarse directamente en:
 ---
 
 [← Anterior](04-limpieza-de-worktrees-y-ramas.md) | [Temario](../08-opencode-github.md) | [Siguiente →](06-issues-y-pull-requests.md)
+
+
+---
+
+[Índice principal](../README.md)
