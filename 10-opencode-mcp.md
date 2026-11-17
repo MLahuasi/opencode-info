@@ -9,9 +9,10 @@ Los ejemplos se basan en el laboratorio [OpenDayCare](./opencode-daycare/README.
 1. [Conceptos y configuración de MCP](./mcps/01-conceptos-y-configuracion.md)
 2. [Playwright MCP](./mcps/02-playwright.md)
 3. [Context7 MCP](./mcps/03-context7.md)
-4. [MCP e instrucciones del agente](./mcps/04-instrucciones-del-agente.md)
-5. [Ejemplos de respuestas y configuración](#ejemplos-de-respuestas-y-configuracion)
-6. [Laboratorio OpenDayCare](./opencode-daycare/README.md)
+4. [Supabase MCP](./mcps/05-supabase.md)
+5. [MCP e instrucciones del agente](./mcps/04-instrucciones-del-agente.md)
+6. [Ejemplos de respuestas y configuración](#ejemplos-de-respuestas-y-configuracion)
+7. [Laboratorio OpenDayCare](./opencode-daycare/README.md)
 
 ## Orden recomendado
 
