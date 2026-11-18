@@ -83,3 +83,8 @@ git branch -d 01-actions
 ---
 
 [← Anterior](../08-opencode-github.md) | [Temario](../08-opencode-github.md) | [Siguiente →](../09-opencode-spec-driven-development.md)
+
+
+---
+
+[Índice principal](../README.md)

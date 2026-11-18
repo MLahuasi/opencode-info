@@ -63,3 +63,8 @@ Qué define
 5. Triggers o procedimientos para las reglas que cruzan varias tablas.
 6. Integración con la autenticación propia.
 ```
+
+
+---
+
+[Índice principal](README.md)

@@ -181,3 +181,8 @@ PowerShell / menú Inicio / acceso directo
                   ↓
              warp.exe
 ```
+
+
+---
+
+[Índice principal](README.md)

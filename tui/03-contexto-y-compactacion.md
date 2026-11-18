@@ -39,3 +39,8 @@ La compactación permite continuar trabajando con un resumen en lugar de mantene
 ---
 
 [← Anterior](02-sesiones-y-panel-lateral.md) | [Temario](../06_opencode_tui.md) | [Siguiente →](04-modo-shell.md)
+
+
+---
+
+[Índice principal](../README.md)

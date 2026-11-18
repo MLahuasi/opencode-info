@@ -20,10 +20,19 @@ Estos documentos reúnen los requisitos y decisiones usados para las páginas y 
 - [Crear y actualizar publicaciones](./create-update-post.md)
 - [Modificar arquitectura](./nextjs-architecture-refactor.md)
 
+## Referencias del laboratorio
+
+- [Esquema de la base de datos de Supabase](./references/schemas/schema_db.md)
+
 ## MCP y agentes
 
 - [Configurar Playwright MCP](../mcps/02-playwright.md)
 - [Ejemplo de respuesta de Context7](../mcps/ejemplos/respuesta-context7-nextjs-auth.md)
 - [Ejemplo de `AGENTS.md`](../mcps/ejemplos/agents-mcp-opencode-daycare.md)
 
-[← Anterior](setup.md) | [Temario MCP](../10-opencode-mcp.md)
+[← Anterior](setup.md) | [Temario MCP](../10-opencode-mcp.md) | [Índice principal](../README.md)
+
+
+---
+
+[Índice principal](../README.md)

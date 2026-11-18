@@ -136,3 +136,8 @@ Este mecanismo resulta especialmente útil en monorepos, repositorios grandes, p
 ---
 
 [← Anterior](05-git-undo-redo.md) | [Temario](../06_opencode_tui.md) | [Siguiente →](07-plan-y-build.md)
+
+
+---
+
+[Índice principal](../README.md)

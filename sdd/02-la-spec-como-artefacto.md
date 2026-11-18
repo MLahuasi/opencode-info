@@ -134,3 +134,8 @@ Una forma sencilla de decidirlo:
 ---
 
 [← Anterior](01-fundamentos-de-sdd.md) | [Temario](../09-opencode-spec-driven-development.md) | [Siguiente →](03-specs-skills-y-agentes.md)
+
+
+---
+
+[Índice principal](../README.md)

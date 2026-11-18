@@ -172,3 +172,8 @@ Estas iteraciones convierten una solicitud relativamente ambigua en un conjunto 
 ---
 
 [← Volver a crear una Spec](../06-crear-generar-y-aprobar-una-spec.md) | [Temario](../../09-opencode-spec-driven-development.md)
+
+
+---
+
+[Índice principal](../../README.md)

@@ -27,3 +27,8 @@ Para conocer los comandos disponibles en tu sesión, escribe `/` o utiliza `Ctrl
 ---
 
 [← Anterior](ejemplos/respuestas-plan-build.md) | [Temario](../06_opencode_tui.md) | [Siguiente →](../07_opencode-assisted-development.md)
+
+
+---
+
+[Índice principal](../README.md)

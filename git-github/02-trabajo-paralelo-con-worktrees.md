@@ -191,3 +191,8 @@ OpenCode puede revisar los cambios y ejecutar el commit sobre la rama correspond
 
 [← Anterior](01-flujo-local-con-ramas.md) | [Temario](../08-opencode-github.md) | [Siguiente →](03-integracion-de-worktrees.md)
 
+
+
+---
+
+[Índice principal](../README.md)

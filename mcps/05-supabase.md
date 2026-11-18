@@ -39,3 +39,8 @@ opencode mcp auth supabase
 ```powershell
 npx skills add supabase/agent-skills
 ```
+
+
+---
+
+[Índice principal](../README.md)

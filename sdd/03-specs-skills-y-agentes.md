@@ -75,3 +75,8 @@ El ejemplo de creación y comprobación de una Skill reutilizable se conserva en
 ---
 
 [← Anterior](02-la-spec-como-artefacto.md) | [Temario](../09-opencode-spec-driven-development.md) | [Siguiente →](04-preparar-opencode-para-sdd.md)
+
+
+---
+
+[Índice principal](../README.md)

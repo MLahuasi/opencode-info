@@ -44,3 +44,8 @@ Permite habilitar la función `Issues` en el repositorio.
 
 [← Anterior](07-github-actions-personalizados.md) | [Temario](../08-opencode-github.md)
 
+
+
+---
+
+[Índice principal](../README.md)

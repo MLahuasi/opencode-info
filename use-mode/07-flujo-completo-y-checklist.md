@@ -125,3 +125,8 @@ Antes de aprobar una implementación generada por OpenCode comprueba:
 ---
 
 [← Anterior](06-automatizar-compilaciones-y-publicaciones.md) | [Temario](../07_opencode-assisted-development.md) | [Siguiente capítulo →](../08-opencode-github.md)
+
+
+---
+
+[Índice principal](../README.md)

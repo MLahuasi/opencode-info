@@ -137,3 +137,8 @@ Archivos como `.env.example` pueden incluirse como documentación si son necesar
 ---
 
 [← Anterior](05-versionar-y-colaborar.md) | [Temario](../07_opencode-assisted-development.md) | [Siguiente →](07-flujo-completo-y-checklist.md)
+
+
+---
+
+[Índice principal](../README.md)

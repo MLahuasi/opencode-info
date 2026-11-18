@@ -98,3 +98,8 @@ Reinicia OpenCode después de modificar `opencode.jsonc`, `instructions.md` o `t
 ```bash
 opencode -c
 ```
+
+
+---
+
+[Índice principal](README.md)

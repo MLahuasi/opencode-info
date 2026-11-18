@@ -58,3 +58,8 @@ No pases a `Build` hasta comprender y aprobar el plan propuesto. Para ver un eje
 ---
 
 [← Anterior](01-preparar-proyecto-e-instrucciones.md) | [Temario](../07_opencode-assisted-development.md) | [Siguiente →](03-implementar-revisar-y-ajustar.md)
+
+
+---
+
+[Índice principal](../README.md)
