@@ -7,15 +7,11 @@
   - [Planificar e implementar](../07_opencode-assisted-development.md#planificar-e-implementar)
   - [Validar](../07_opencode-assisted-development.md#validar)
 
-## Git, GitHub y SDD
+## Git y GitHub
 
 - [Integrar OpenCode con Git y GitHub](../08-opencode-github.md) — ramas, commits, merges, worktrees, Pull Requests, Actions y revisión semiautomática de Specs.
   - [Desarrollo local con Git](../08-opencode-github.md#desarrollo-local-con-git)
   - [GitHub y OpenCode](../08-opencode-github.md#github-y-opencode)
-- [Spec Driven Development (SDD)](../09-opencode-spec-driven-development.md) — Specs, Skills, agentes y Git.
-  - [Fundamentos](../09-opencode-spec-driven-development.md#fundamentos)
-  - [Flujo de una Spec](../09-opencode-spec-driven-development.md#flujo-de-una-spec)
-
 ## Herramientas y extensiones
 
 - [MCPs e instrucciones para agentes](../10-opencode-mcp.md) — configuración de MCP y relación con agentes y herramientas.
@@ -47,4 +43,4 @@
 
 ---
 
-[← Anterior](02-configuracion-y-uso-diario.md) | [Índice principal](../README.md) | [Siguiente →](04-referencias.md)
+[← Anterior](02-configuracion-y-uso-diario.md) | [Índice principal](../README.md) | [Siguiente →](04-metodologias-de-desarrollo-de-software.md)
