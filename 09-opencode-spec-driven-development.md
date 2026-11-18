@@ -41,4 +41,4 @@ Los documentos dentro de `sdd/ejemplos/` conservan salidas, preguntas, respuesta
 
 ---
 
-[← Anterior](08-opencode-github.md) | [Temario](README.md) | [Siguiente →](10-opencode-mcp.md)
+[← Anterior](08-opencode-github.md) | [Temario](temarios/04-metodologias-de-desarrollo-de-software.md) | [Índice principal](README.md) | [Siguiente →](10-opencode-mcp.md)
