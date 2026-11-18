@@ -210,3 +210,8 @@ git merge union-worktree
 
 [← Anterior](02-trabajo-paralelo-con-worktrees.md) | [Temario](../08-opencode-github.md) | [Siguiente →](04-limpieza-de-worktrees-y-ramas.md)
 
+
+
+---
+
+[Índice principal](../README.md)

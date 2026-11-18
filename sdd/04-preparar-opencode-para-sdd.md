@@ -102,3 +102,8 @@ git commit -m "OpenCode Skills - Create Agents.md"
 ---
 
 [← Anterior](03-specs-skills-y-agentes.md) | [Temario](../09-opencode-spec-driven-development.md) | [Siguiente →](05-git-y-proteccion-de-main.md)
+
+
+---
+
+[Índice principal](../README.md)

@@ -152,3 +152,8 @@ Este proceso puede automatizarse mediante un [comando personalizado de OpenCode]
 
 [← Anterior](03-integracion-de-worktrees.md) | [Temario](../08-opencode-github.md) | [Siguiente →](05-configuracion-del-agente-en-github.md)
 
+
+
+---
+
+[Índice principal](../README.md)

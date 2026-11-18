@@ -94,3 +94,8 @@ El atajo `Ctrl + X` también da acceso a otras acciones de OpenCode; las opcione
 ## Resumen del flujo
 
 Para Zen y OpenAI, inicia OpenCode y configura la autenticación desde `/connect`. Para Ollama, instala Ollama y ejecuta `ollama launch opencode --model <modelo>`. En cualquiera de los casos, usa `/models` para revisar la selección de modelo e inicia una conversación para validar la respuesta.
+
+
+---
+
+[Índice principal](README.md)

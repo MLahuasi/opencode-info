@@ -360,3 +360,8 @@ git branch -d spec-03-kids-and-profiles
 git branch -d spec-04-kid-allergy-tags
 git branch -d sync-main-changes
 ```
+
+
+---
+
+[Índice principal](../README.md)

@@ -99,3 +99,8 @@ Nuevo mensaje
 La compactación resume información y puede perder detalles o matices. Revisa el resumen cuando las decisiones sean importantes y procura conservar el estado, las restricciones y los pendientes que todavía guían el trabajo.
 
 > **El modelo no recuerda por sí solo la conversación: la aplicación le proporciona contexto. Cuando ese contexto crece, conviene conservar lo relevante y resumir lo demás.**
+
+
+---
+
+[Índice principal](README.md)

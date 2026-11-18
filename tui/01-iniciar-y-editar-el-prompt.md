@@ -80,3 +80,8 @@ La referencia incorpora el archivo a la solicitud correspondiente; no implica qu
 ---
 
 [← Anterior](../05_opencode-context.md) | [Temario](../06_opencode_tui.md) | [Siguiente →](02-sesiones-y-panel-lateral.md)
+
+
+---
+
+[Índice principal](../README.md)

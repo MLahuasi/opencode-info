@@ -201,3 +201,8 @@ Este flujo permite solicitar trabajo a OpenCode directamente desde GitHub sin ej
 
 [← Anterior](05-configuracion-del-agente-en-github.md) | [Temario](../08-opencode-github.md) | [Siguiente →](07-github-actions-personalizados.md)
 
+
+
+---
+
+[Índice principal](../README.md)

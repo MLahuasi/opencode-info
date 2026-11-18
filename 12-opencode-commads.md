@@ -93,3 +93,8 @@ La salida incluye la ruta, el commit y la rama de cada worktree. Por ejemplo:
 ```
 
 OpenCode recarga automáticamente los cambios en los archivos de comandos y configuración, por lo que normalmente no hace falta reiniciarlo. Si el comando no aparece, comprueba su nombre y que el archivo esté en una carpeta reconocida.
+
+
+---
+
+[Índice principal](README.md)

@@ -231,3 +231,8 @@ git branch -d spec-01-four-ghost-behaviors
 ---
 
 [← Anterior](06-crear-generar-y-aprobar-una-spec.md) | [Temario](../09-opencode-spec-driven-development.md) | [Siguiente →](08-flujo-principios-y-modelo-mental.md)
+
+
+---
+
+[Índice principal](../README.md)

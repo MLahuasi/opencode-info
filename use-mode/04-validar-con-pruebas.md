@@ -57,3 +57,8 @@ La compilación no reemplaza las pruebas y las pruebas no reemplazan la revisió
 ---
 
 [← Anterior](03-implementar-revisar-y-ajustar.md) | [Temario](../07_opencode-assisted-development.md) | [Siguiente →](05-versionar-y-colaborar.md)
+
+
+---
+
+[Índice principal](../README.md)

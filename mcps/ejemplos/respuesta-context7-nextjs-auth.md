@@ -153,3 +153,8 @@ export async function deleteUser(userId: string) {
 Referencias: [Authentication](https://nextjs.org/docs/app/guides/authentication), [Data Security](https://nextjs.org/docs/app/guides/data-security) y [Proxy](https://nextjs.org/docs/app/api-reference/file-conventions/proxy).
 
 [← Volver a Context7](../03-context7.md) | [Temario](../../10-opencode-mcp.md)
+
+
+---
+
+[Índice principal](../../README.md)

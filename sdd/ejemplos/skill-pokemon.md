@@ -63,3 +63,8 @@ Resultado:
 ---
 
 [← Volver a Specs, Skills y agentes](../03-specs-skills-y-agentes.md) | [Temario](../../09-opencode-spec-driven-development.md) | [Siguiente →](refinamiento-spec-fantasmas.md)
+
+
+---
+
+[Índice principal](../../README.md)

@@ -101,3 +101,8 @@ git pull
 ```bash
 git branch -d spec-06-kid-create-and-update
 ```
+
+
+---
+
+[Índice principal](../README.md)

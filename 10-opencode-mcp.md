@@ -35,3 +35,8 @@ Los ejemplos se basan en el laboratorio [OpenDayCare](./opencode-daycare/README.
 - [Documentación de Skills de OpenCode](https://opencode.ai/docs/skills/)
 - [Documentación de Playwright MCP](https://playwright.dev/docs/getting-started-mcp)
 - [Documentación de Context7](https://context7.com/docs/overview)
+
+
+---
+
+[Índice principal](README.md)

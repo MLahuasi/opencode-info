@@ -58,3 +58,8 @@ Las transcripciones completas de este flujo se encuentran en [Ejemplos de respue
 ---
 
 [← Anterior](06-init-agents-e-ignorados.md) | [Temario](../06_opencode_tui.md) | [Siguiente →](ejemplos/respuestas-plan-build.md)
+
+
+---
+
+[Índice principal](../README.md)

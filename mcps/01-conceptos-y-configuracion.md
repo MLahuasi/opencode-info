@@ -46,3 +46,8 @@ Para conocer la configuración global y las opciones generales, consulta la [gu�
 - [Usar MCP en las instrucciones del agente](./04-instrucciones-del-agente.md)
 
 [Temario](../10-opencode-mcp.md) | [Siguiente →](02-playwright.md)
+
+
+---
+
+[Índice principal](../README.md)

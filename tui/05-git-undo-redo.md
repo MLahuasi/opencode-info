@@ -82,3 +82,8 @@ Sin Git, no dependas de Undo/Redo para recuperar cambios en archivos. Revisa sie
 ---
 
 [← Anterior](04-modo-shell.md) | [Temario](../06_opencode_tui.md) | [Siguiente →](06-init-agents-e-ignorados.md)
+
+
+---
+
+[Índice principal](../README.md)

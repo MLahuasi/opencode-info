@@ -47,3 +47,8 @@ OpenCode utilizará la carpeta actual como workspace.
 ## Nota: instalador para Unix
 
 El comando `curl -fsSL https://opencode.ai/install | bash` está pensado para entornos con `bash`. No lo ejecutes directamente en PowerShell: allí `curl` puede ser un alias de `Invoke-WebRequest`, que no admite las mismas opciones. Para esta guía de Windows se utiliza npm.
+
+
+---
+
+[Índice principal](README.md)

@@ -34,3 +34,8 @@ git commit -m "OpenCode MCP and project instructions"
 ```
 
 [← Anterior](03-context7.md) | [Temario](../10-opencode-mcp.md)
+
+
+---
+
+[Índice principal](../README.md)

@@ -59,3 +59,8 @@ La barra puede mostrar información como:
 ---
 
 [← Anterior](01-iniciar-y-editar-el-prompt.md) | [Temario](../06_opencode_tui.md) | [Siguiente →](03-contexto-y-compactacion.md)
+
+
+---
+
+[Índice principal](../README.md)
