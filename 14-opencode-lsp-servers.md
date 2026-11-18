@@ -23,4 +23,4 @@ Añadir en [opencode.jsonc](../open-daycare/opencode.json) `lsp` para activar.
 
 ---
 
-[Índice principal](README.md)
+[Índice principal](README.md) | [Siguiente →](15-opencode-formatters.md)

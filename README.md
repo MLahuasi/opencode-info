@@ -6,7 +6,7 @@ Este repositorio reúne guías, conceptos y ejemplos para trabajar con OpenCode.
 
 1. [Preparar el entorno](./temarios/01-preparar-entorno.md) — instalación, terminal y proveedores.
 2. [Configuración y uso diario](./temarios/02-configuracion-y-uso-diario.md) — configuración global, contexto y TUI.
-3. [Desarrollo, automatización y colaboración](./temarios/03-desarrollo-y-colaboracion.md) — desarrollo asistido, Git, GitHub, SDD, MCP, agentes, comandos y LSP.
+3. [Desarrollo, automatización y colaboración](./temarios/03-desarrollo-y-colaboracion.md) — desarrollo asistido, Git, GitHub, SDD, MCP, agentes, comandos, LSP, Formatters, subagentes y CRON Jobs.
 4. [Referencias y consulta rápida](./temarios/04-referencias.md) — comandos, modelos y documentación de consulta.
 5. [Laboratorio OpenDayCare](./opencode-daycare/README.md) — ejemplos de aplicación de los temas anteriores.
 
