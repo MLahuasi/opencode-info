@@ -12,3 +12,7 @@ Este repositorio reúne guías, conceptos y ejemplos para trabajar con OpenCode.
 6. [Laboratorio OpenDayCare](./opencode-daycare/README.md) — ejemplos de aplicación de los temas anteriores.
 
 > Los documentos enlazados conservan sus comandos, ejemplos, bloques de código e imágenes. Los submenús organizan la navegación sin duplicar el contenido de las guías.
+
+## Extras
+
+[excalidraw](https://excalidraw.com/): Herramienta utilizada para crear diagramas y mapas visuales ([Ejemplo](./assets/opencode.excalidraw.txt))
