@@ -12,10 +12,21 @@ Este submenú reúne metodologías para organizar, especificar, implementar y va
   - [Implementar, validar e integrar una Spec](../sdd/07-implementar-validar-e-integrar.md#implementar-validar-e-integrar-una-spec)
   - [Flujo, principios y modelo mental](../sdd/08-flujo-principios-y-modelo-mental.md#flujo-principios-y-modelo-mental-de-sdd)
 
-## Próximas metodologías
+## Grill-me
 
-- **Grill-me** — pendiente de documentación.
-- **OpenSpec** — pendiente de documentación.
+- [Fundamentos de Grill-me](../grill-me/01-fundamentos-grill-me.md) — explorar ideas, descubrir supuestos y alinear decisiones mediante preguntas sistemáticas.
+  - [Qué problema resuelve](../grill-me/01-fundamentos-grill-me.md#1-qué-problema-resuelve)
+  - [Cuándo utilizar Grill-me](../grill-me/01-fundamentos-grill-me.md#3-cuándo-utilizar-grill-me)
+  - [Cómo iniciar una sesión](../grill-me/01-fundamentos-grill-me.md#5-cómo-iniciar-una-sesión)
+
+## OpenSpec
+
+- [Fundamentos de OpenSpec](../openspec/01-fundamentos-openspec.md) — crear, revisar, implementar, validar y archivar cambios mediante Specs delta.
+  - [Instalar y verificar](../openspec/01-fundamentos-openspec.md#1-instalar-y-verificar)
+  - [Inicializar el proyecto](../openspec/01-fundamentos-openspec.md#2-inicializar-el-proyecto)
+  - [Skills instaladas para OpenCode](../openspec/01-fundamentos-openspec.md#4-skills-instaladas-para-opencode)
+  - [Estructura y configuración](../openspec/01-fundamentos-openspec.md#3-entender-la-estructura-inicial)
+  - [Flujo secuencial](../openspec/01-fundamentos-openspec.md#8-flujo-secuencial-de-trabajo)
 
 ---
 
